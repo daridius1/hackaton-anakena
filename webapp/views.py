@@ -29,7 +29,7 @@ def index(request):
             'titulo': 'La Importancia de Compartir',
             'descripcion': 'Aprende por qué compartir con los demás nos hace felices',
             'thumbnail': 'ejemplos/compartir_thumb.jpg',
-            'video': 'ejemplos/compartir.mp4',
+            'video': 'ejemplos/ejemplo1.mp4',
             'duracion': '8 min',
         },
         {

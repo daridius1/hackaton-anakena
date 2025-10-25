@@ -1,10 +1,53 @@
 # Generador de Cuentos Infantiles Educativos 🎨🎵🖼️🎬
 
-Sistema de 4 pipelines para crear videos educativos infantiles automáticamente a partir de una moraleja.
+Sistema de 4 pipelines + interfaz web para crear videos educativos infantiles automáticamente a partir de una moraleja.
+
+**🚀 Demo para Hackaton: Aplicación Web Django completa**
 
 ## 🎯 Objetivo
 
 Generar videos educativos completos (imagen + voz + sonido) para niños de 5-8 años, partiendo solo de una moraleja o lección moral.
+
+## 🌐 Interfaz Web (NUEVO)
+
+### Inicio Rápido - Demo Web
+
+```bash
+# 1. Activar entorno
+source .venv/bin/activate
+
+# 2. Iniciar servidor Django
+python manage.py runserver
+
+# 3. Abrir en navegador
+http://localhost:8000
+```
+
+### Funcionalidades de la Web
+
+- ✅ **Página principal** con input de moraleja
+- ✅ **4 cards de videos de ejemplo** (con emojis ilustrativos)
+- ✅ **Generación en tiempo real** (muestra progreso de pipelines)
+- ✅ **Video player integrado** (HTML5 con controles)
+- ✅ **Descarga de videos** generados
+- ✅ **UI moderna** con TailwindCSS
+- ✅ **Sin base de datos** (solo filesystem)
+
+### Flujo de Usuario
+
+```
+Usuario → Escribe moraleja → Click "Generar Video"
+   ↓
+Pipeline 1 → Guion JSON
+   ↓
+Pipeline 2 → Voces MP3 (placeholder)
+   ↓  
+Pipeline 3 → Imágenes PNG (placeholder)
+   ↓
+Pipeline 4 → Video MP4 final
+   ↓
+Página de resultados → Ver/Descargar video
+```
 
 ## 📋 Flujo de Pipelines
 

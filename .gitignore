@@ -35,3 +35,17 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# Archivos generados por los pipelines
+guion.json
+assets/voices/*.mp3
+assets/images/*.png
+assets/images/*.jpg
+assets/images/*.jpeg
+assets/outputs/*.mp4
+assets/outputs/*.avi
+assets/background_sounds/*.mp3
+assets/background_sounds/*.wav
+
+# Excepciones: mantener los README
+!assets/*/README.md

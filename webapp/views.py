@@ -141,9 +141,14 @@ def generar_video(request):
     }
     
     try:
-        # PIPELINE 1: Guion
-        PROGRESS_STORAGE[task_id].update({'step': 'Generando guion...', 'progress': 10})
-        pipeline1 = Pipeline1Guion()
+        # 🆕 Obtener perfil del usuario si está logueado
+        perfil = None
+        if request.user.is_authenticated and hasattr(request.user, 'perfil'):
+            perfil = request.user.perfil
+        
+        # PIPELINE 1: Guion (con personalización)
+        PROGRESS_STORAGE[task_id].update({'step': 'Generando guion personalizado...', 'progress': 10})
+        pipeline1 = Pipeline1Guion(perfil_usuario=perfil)  # 🆕 Pasar perfil
         guion_path = f"guion_{task_id}.json"
         guion = pipeline1.generar(moraleja, output_path=guion_path)
         

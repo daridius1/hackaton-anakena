@@ -22,11 +22,12 @@ load_dotenv()
 class Pipeline1Guion:
     """Pipeline 1: Generador de guiones infantiles usando Deepseek API"""
     
-    def __init__(self, api_key: str | None = None, api_url: str | None = None, timeout: int | None = None):
+    def __init__(self, api_key: str | None = None, api_url: str | None = None, timeout: int | None = None, perfil_usuario=None):
         self.api_key = api_key or os.getenv("DEEPSEEK_API_KEY")
         self.api_url = api_url or os.getenv("DEEPSEEK_API_URL")
         timeout_env = timeout or os.getenv("DEEPSEEK_TIMEOUT")
         self.timeout = int(timeout_env) if timeout_env is not None else 60
+        self.perfil_usuario = perfil_usuario  # 🆕 Perfil para personalización
 
         if not self.api_key:
             raise RuntimeError("DEEPSEEK_API_KEY no está configurada. Revisa tu archivo .env")
@@ -35,7 +36,7 @@ class Pipeline1Guion:
 
     def _build_prompt(self, moraleja: str) -> str:
         """Construye el prompt para Deepseek con el esquema JSON y reglas"""
-        prompt = (
+        prompt_base = (
             "Genera UN SOLO JSON que cumpla con este esquema:\n"
             "Esquema: {\n"
             "  \"guion\":{\n"
@@ -74,7 +75,14 @@ class Pipeline1Guion:
             "Moraleja: \"" + moraleja + "\"\n"
             "Devuelve únicamente el JSON, sin texto adicional."
         )
-        return prompt
+        
+        # 🆕 Aplicar personalización si hay perfil
+        if self.perfil_usuario:
+            from agents.story_adapter import StoryAdapter
+            adapter = StoryAdapter()
+            prompt_base = adapter.adaptar_prompt_guion(prompt_base, self.perfil_usuario)
+        
+        return prompt_base
 
     def _call_deepseek_api(self, prompt: str) -> Dict[str, Any]:
         """Llama a la API de Deepseek con el prompt"""

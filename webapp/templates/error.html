@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto fade-in">
+    
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-lg mb-8">
+        <div class="flex items-start">
+            <span class="text-3xl mr-4">❌</span>
+            <div>
+                <p class="font-bold text-lg mb-2">Ocurrió un error</p>
+                <p class="text-sm">{{ error|default:"No se pudo generar el video. Intenta nuevamente." }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <a 
+            href="{% url 'webapp:index' %}"
+            class="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
+        >
+            ← Volver al inicio
+        </a>
+    </div>
+    
+</div>
+{% endblock %}

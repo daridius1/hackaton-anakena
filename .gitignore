@@ -36,16 +36,24 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
+# Django
+db.sqlite3
+*.log
+staticfiles/
+
 # Archivos generados por los pipelines
 guion.json
+guion_*.json
 assets/voices/*.mp3
 assets/images/*.png
 assets/images/*.jpg
 assets/images/*.jpeg
 assets/outputs/*.mp4
 assets/outputs/*.avi
+assets/outputs/*_metadata.json
 assets/background_sounds/*.mp3
 assets/background_sounds/*.wav
 
-# Excepciones: mantener los README
+# Excepciones: mantener los README y ejemplos
 !assets/*/README.md
+!assets/outputs/ejemplos/

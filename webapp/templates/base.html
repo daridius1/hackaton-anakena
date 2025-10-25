@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Generador de Cuentos Infantiles{% endblock %}</title>
+    
+    <!-- TailwindCSS CDN (para hackaton, en producción usar build) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <a href="{% url 'webapp:index' %}" class="flex items-center space-x-3">
+                    <div class="text-4xl">🎨</div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Cuentos con IA</h1>
+                        <p class="text-sm text-gray-600">Educación con Inteligencia Artificial</p>
+                    </div>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center space-x-1">
+                        <span class="text-green-500">✓</span>
+                        <span>Pipeline 1: Guion</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <span class="text-yellow-500">⚠</span>
+                        <span>Pipeline 2: Audio</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <span class="text-yellow-500">⚠</span>
+                        <span>Pipeline 3: Imagen</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <span class="text-green-500">✓</span>
+                        <span>Pipeline 4: Video</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-16">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-600 text-sm">
+            <p>🚀 Hackaton 2025 - Generador de Cuentos Infantiles con IA</p>
+            <p class="mt-2">Powered by Deepseek + MoviePy + Django</p>
+        </div>
+    </footer>
+    
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

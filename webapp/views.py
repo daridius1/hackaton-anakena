@@ -2,6 +2,21 @@
 Vistas de la aplicación web de cuentos infantiles
 Integra con los pipelines existentes sin modificarlos
 """
+
+import json
+import uuid
+from pathlib import Path
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
+# Importar los pipelines existentes (sin modificar tu código)
+from pipelines import Pipeline1Guion, Pipeline2Audio, Pipeline3Imagen, Pipeline4Video
+
+# Importar el agente educativo
+from agents import EduAgent
 import json
 import os
 import uuid
@@ -21,6 +36,25 @@ PROGRESS_STORAGE = {}
 
 def index(request):
     """Página principal con input y ejemplos de videos"""
+    
+    # Generar sugerencias personalizadas si el usuario está logueado
+    sugerencias = []
+    if request.user.is_authenticated and hasattr(request.user, 'perfil'):
+        agent = EduAgent(request.user.perfil)
+        sugerencias = agent.obtener_sugerencias(n=5)
+        
+        # Registrar que se mostraron estas sugerencias
+        for sug in sugerencias:
+            agent.registrar_interaccion(
+                moraleja=sug['moraleja'],
+                razon=sug['razon'],
+                valores=sug['valores'],
+                seleccionada=False
+            )
+    else:
+        # Sugerencias genéricas para usuarios no logueados
+        agent = EduAgent()
+        sugerencias = agent.obtener_sugerencias(n=5)
     
     # Videos de ejemplo pre-generados
     ejemplos = [
@@ -59,7 +93,8 @@ def index(request):
     ]
     
     return render(request, 'index.html', {
-        'ejemplos': ejemplos
+        'ejemplos': ejemplos,
+        'sugerencias': sugerencias
     })
 
 
@@ -74,6 +109,23 @@ def generar_video(request):
     
     if not moraleja:
         return redirect('webapp:index')
+    
+    # 🆕 VALIDACIÓN ÉTICA con el agente
+    agent = EduAgent(request.user.perfil if request.user.is_authenticated and hasattr(request.user, 'perfil') else None)
+    validacion = agent.validar_moraleja(moraleja)
+    
+    if not validacion.get('es_valida', False):
+        return render(request, 'error.html', {
+            'error_title': 'Contenido No Apropiado',
+            'error_message': validacion.get('razon', 'Esta moraleja no es apropiada para contenido infantil.'),
+            'error_type': 'filtro_etico',
+            'valores_detectados': validacion.get('valores_detectados', []),
+            'nivel': validacion.get('nivel_apropiado', 'rechazado')
+        })
+    
+    # Registrar que el usuario seleccionó esta moraleja
+    if request.user.is_authenticated and hasattr(request.user, 'perfil'):
+        agent.marcar_video_generado(moraleja)
     
     # Generar ID único para esta tarea
     task_id = str(uuid.uuid4())[:8]

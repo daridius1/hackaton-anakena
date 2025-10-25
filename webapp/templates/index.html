@@ -15,6 +15,51 @@
     
     <!-- Input Form -->
     <div class="bg-white rounded-2xl shadow-xl p-8 mb-16">
+        
+        <!-- Sugerencias Personalizadas (si hay) -->
+        {% if sugerencias %}
+        <div class="mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="text-3xl mr-3">🤖</span>
+                Sugerencias para ti
+                {% if user.is_authenticated %}
+                <span class="ml-2 text-sm font-normal text-purple-600">(personalizadas)</span>
+                {% endif %}
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {% for sug in sugerencias %}
+                <button 
+                    type="button"
+                    onclick="usarSugerencia('{{ sug.moraleja }}')"
+                    class="text-left p-4 border-2 border-purple-200 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all group"
+                >
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="font-semibold text-gray-800 group-hover:text-purple-700">
+                            {{ sug.moraleja }}
+                        </span>
+                        <span class="text-2xl">
+                            {% if sug.prioridad >= 5 %}🌟
+                            {% elif sug.prioridad >= 4 %}⭐
+                            {% else %}✨{% endif %}
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">{{ sug.razon }}</p>
+                    <div class="flex flex-wrap gap-1">
+                        {% for valor in sug.valores %}
+                        <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
+                            {{ valor }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </button>
+                {% endfor %}
+            </div>
+            <p class="text-sm text-gray-500 text-center">
+                💡 Haz click en una sugerencia o escribe tu propia moraleja
+            </p>
+        </div>
+        {% endif %}
+        
         <form method="POST" action="{% url 'webapp:generar_video' %}" class="space-y-6">
             {% csrf_token %}
             
@@ -236,6 +281,22 @@ document.getElementById('videoModal')?.addEventListener('click', function(event)
         closeVideoModal();
     }
 });
+
+// Función para usar una sugerencia
+function usarSugerencia(moraleja) {
+    const textarea = document.getElementById('moraleja');
+    textarea.value = moraleja;
+    textarea.focus();
+    
+    // Scroll suave al formulario
+    textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Efecto visual
+    textarea.classList.add('ring-4', 'ring-purple-300');
+    setTimeout(() => {
+        textarea.classList.remove('ring-4', 'ring-purple-300');
+    }, 1000);
+}
 </script>
 
 {% endblock %}

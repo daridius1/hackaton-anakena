@@ -1,26 +1,65 @@
 {% extends 'base.html' %}
 
-{% block title %}Error{% endblock %}
+{% block title %}{{ error_title|default:"Error" }}{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto fade-in">
+<div class="max-w-3xl mx-auto fade-in">
     
+    {% if error_type == 'filtro_etico' %}
+    <!-- Error de Filtro Ético -->
+    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-8 rounded-lg mb-8">
+        <div class="flex items-start">
+            <span class="text-5xl mr-4">🛡️</span>
+            <div class="flex-1">
+                <h2 class="font-bold text-2xl text-yellow-800 mb-3">
+                    {{ error_title|default:"Contenido No Apropiado" }}
+                </h2>
+                <p class="text-lg text-yellow-700 mb-4">
+                    {{ error_message }}
+                </p>
+                
+                {% if valores_detectados %}
+                <div class="mt-4 p-4 bg-white rounded-lg">
+                    <p class="font-semibold text-gray-700 mb-2">Valores detectados:</p>
+                    <div class="flex flex-wrap gap-2">
+                        {% for valor in valores_detectados %}
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+                            {{ valor }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p class="text-sm text-blue-800">
+                        <strong>💡 Sugerencia:</strong> Intenta con moralejas que enseñen valores positivos como:
+                        empatía, honestidad, responsabilidad, amistad, respeto, o cuidado del medio ambiente.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% else %}
+    <!-- Error Genérico -->
     <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-lg mb-8">
         <div class="flex items-start">
             <span class="text-3xl mr-4">❌</span>
             <div>
-                <p class="font-bold text-lg mb-2">Ocurrió un error</p>
-                <p class="text-sm">{{ error|default:"No se pudo generar el video. Intenta nuevamente." }}</p>
+                <p class="font-bold text-lg mb-2">{{ error_title|default:"Ocurrió un error" }}</p>
+                <p class="text-sm">{{ error_message|default:"No se pudo generar el video. Intenta nuevamente." }}</p>
             </div>
         </div>
     </div>
+    {% endif %}
     
     <div class="text-center">
         <a 
             href="{% url 'webapp:index' %}"
             class="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
         >
-            ← Volver al inicio
+            ← Volver e intentar de nuevo
         </a>
     </div>
     

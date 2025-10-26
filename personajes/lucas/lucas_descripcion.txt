@@ -1,0 +1,43 @@
+LUCAS - Personaje Infantil Masculino
+
+EDAD: 7 años
+
+CARACTERÍSTICAS FÍSICAS EXACTAS:
+- Cabello: castaño oscuro, corto, con flequillo hacia un lado
+- Ojos: grandes y expresivos, color café claro
+- Piel: tez clara con ligero bronceado
+- Dientes: blancos y brillantes (siempre visibles cuando sonríe)
+- Altura: estatura promedio para 7 años (aproximadamente 1.20m)
+- Complexión: delgado pero saludable
+
+ROPA CARACTERÍSTICA:
+- Camisa: azul celeste (color #87CEEB), manga corta, con cuello
+- Pantalón: jean azul oscuro
+- Zapatos: tenis blancos con detalles azules
+- IMPORTANTE: Siempre usa esta misma ropa en todos los cuentos
+
+EXPRESIONES FACIALES TÍPICAS:
+- Sonrisa amplia mostrando dientes (expresión por defecto)
+- Ojos brillantes de entusiasmo
+- Cejas levantadas cuando está emocionado
+- Postura erguida y confiada
+
+PERSONALIDAD (para reflejar en las imágenes):
+- Alegre y positivo
+- Responsable y ordenado
+- Buen ejemplo para otros niños
+- Energético pero controlado
+
+ESTILO DE ILUSTRACIÓN:
+- Ilustración infantil colorida
+- Estilo cartoon amigable
+- Colores brillantes y alegres
+- Sin sombras muy marcadas
+- Líneas suaves y redondeadas
+
+CONTEXTO DE USO:
+Lucas es uno de los 5 personajes principales que aparecerá en MÚLTIPLES cuentos educativos. 
+DEBE verse EXACTAMENTE IGUAL en todos los cuentos para que los niños lo reconozcan.
+
+PALABRAS CLAVE PARA PROMPTS:
+"niño de 7 años llamado Lucas, cabello castaño corto, camisa azul celeste, sonrisa brillante con dientes blancos, ojos café expresivos, estilo ilustración infantil colorida"

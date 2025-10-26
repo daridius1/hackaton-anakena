@@ -1,0 +1,58 @@
+DR. MUELITAS - Personaje Adulto Masculino (Dentista)
+
+EDAD: 40 años
+
+CARACTERÍSTICAS FÍSICAS EXACTAS:
+- Cabello: negro con canas en las sienes, peinado hacia atrás, bien cuidado
+- Rostro: oval, rasgos amables
+- Bigote: negro con algunas canas, bien recortado, estilo clásico
+- Ojos: color café oscuro, con arrugas de expresión (por sonreír mucho)
+- Piel: tez morena clara
+- Gafas: redondas, montura metálica plateada, siempre puestas
+- Altura: alto (aproximadamente 1.78m)
+- Complexión: delgado pero fuerte, postura erguida
+
+ROPA CARACTERÍSTICA:
+- Bata: blanca de dentista, manga larga, bien planchada, hasta las rodillas
+- Debajo: camisa celeste y corbata azul oscuro
+- Pantalón: gris oscuro (se ve por debajo de la bata)
+- Zapatos: negros formales
+- Nombre bordado en la bata: "Dr. Muelitas" (opcional, puede no verse)
+- IMPORTANTE: Siempre usa esta misma bata blanca en todos los cuentos
+
+EXPRESIONES FACIALES TÍPICAS:
+- Sonrisa amplia y cálida (expresión por defecto)
+- Ojos arrugados de tanto sonreír
+- Cejas levantadas cuando explica algo
+- Expresión paternal y comprensiva
+- Gestos de enseñanza (señalando, mostrando)
+
+PERSONALIDAD (para reflejar en las imágenes):
+- Amable y cariñoso
+- Paciente con los niños
+- Educador nato, le gusta enseñar
+- Sonriente y positivo
+- Autoridad pero no intimidante
+- Profesional pero cercano
+
+ACCESORIOS OPCIONALES:
+- Puede llevar un cepillo de dientes gigante (herramienta educativa)
+- Modelo de dientes grandes para enseñar
+- Estetoscopio dental
+- Siempre herramientas educativas, NO invasivas
+
+ESTILO DE ILUSTRACIÓN:
+- Ilustración infantil colorida
+- Estilo cartoon amigable (NO realista, para no asustar a niños)
+- Colores brillantes y alegres
+- Sin sombras muy marcadas
+- Líneas suaves y redondeadas
+- Expresión SIEMPRE amigable, nunca seria o intimidante
+
+CONTEXTO DE USO:
+Dr. Muelitas es uno de los 5 personajes principales que aparecerá en MÚLTIPLES cuentos educativos.
+DEBE verse EXACTAMENTE IGUAL en todos los cuentos para que los niños lo reconozcan y confíen en él.
+Es una figura de autoridad POSITIVA y AMIGABLE, nunca debe verse intimidante.
+
+PALABRAS CLAVE PARA PROMPTS:
+"doctor dentista de 40 años llamado Dr. Muelitas, cabello negro con canas, bigote, gafas redondas, bata blanca de dentista, sonrisa amplia y amable, ojos café oscuros expresivos, estilo ilustración infantil colorida amigable"

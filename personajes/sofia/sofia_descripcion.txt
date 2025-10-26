@@ -1,0 +1,46 @@
+SOFIA - Personaje Infantil Femenino
+
+EDAD: 7 años
+
+CARACTERÍSTICAS FÍSICAS EXACTAS:
+- Cabello: rizado/ondulado, castaño oscuro, largo hasta los hombros, con volumen natural
+- Ojos: grandes y expresivos, color café oscuro, pestañas largas
+- Piel: tez morena clara (tono canela/trigueño)
+- Altura: estatura promedio para 7 años (aproximadamente 1.18m)
+- Complexión: delgada, energética
+
+ROPA CARACTERÍSTICA:
+- Vestido: rosa intenso (color #FF69B4), manga corta, con falda hasta las rodillas
+- Puede tener pequeños detalles blancos o flores en el vestido
+- Zapatos: zapatillas blancas con cordones rosas
+- Lazo o diadema: rosa claro en el cabello
+- IMPORTANTE: Siempre usa este mismo vestido rosa en todos los cuentos
+
+EXPRESIONES FACIALES TÍPICAS:
+- Ojos muy abiertos de curiosidad (expresión por defecto)
+- Sonrisa entusiasta cuando aprende algo
+- Cejas levantadas en señal de interés
+- Gestos de señalar o preguntar
+- Expresión de concentración cuando está aprendiendo
+
+PERSONALIDAD (para reflejar en las imágenes):
+- Curiosa e inquisitiva
+- Entusiasta por aprender
+- Hace muchas preguntas
+- Atenta y observadora
+- Amigable y social
+
+ESTILO DE ILUSTRACIÓN:
+- Ilustración infantil colorida
+- Estilo cartoon amigable
+- Colores brillantes y alegres
+- Sin sombras muy marcadas
+- Líneas suaves y redondeadas
+- Cabello con textura rizada visible
+
+CONTEXTO DE USO:
+Sofia es uno de los 5 personajes principales que aparecerá en MÚLTIPLES cuentos educativos.
+DEBE verse EXACTAMENTE IGUAL en todos los cuentos para que los niños la reconozcan.
+
+PALABRAS CLAVE PARA PROMPTS:
+"niña de 7 años llamada Sofia, cabello rizado castaño oscuro largo, vestido rosa intenso, ojos café oscuro expresivos, tez morena clara, expresión curiosa, estilo ilustración infantil colorida"

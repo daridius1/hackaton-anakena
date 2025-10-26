@@ -46,7 +46,8 @@ class Pipeline4Video:
         output_name: str = "cuento_final.mp4",
         fade_duration: float = 0.5,
         dialog_delay: float = 0.8,
-        bg_volume: float = 0.3
+        bg_volume: float = 0.3,
+        music_volume: float = 0.15
     ) -> str:
         """
         Ensambla el video final combinando todos los assets.
@@ -56,7 +57,8 @@ class Pipeline4Video:
             output_name: Nombre del video de salida
             fade_duration: Duración del fade in/out en segundos
             dialog_delay: Tiempo de silencio antes del diálogo en segundos
-            bg_volume: Volumen del audio de fondo (0.0-1.0)
+            bg_volume: Volumen del audio de fondo ambiental (0.0-1.0)
+            music_volume: Volumen de la música de fondo general (0.0-1.0)
             
         Returns:
             Ruta al video generado
@@ -76,7 +78,7 @@ class Pipeline4Video:
         
         print(f"   Título: {titulo}")
         print(f"   Total escenas: {len(escenas)}")
-        print(f"   Configuración: fade={fade_duration}s, delay={dialog_delay}s, bg_vol={bg_volume}")
+        print(f"   Configuración: fade={fade_duration}s, delay={dialog_delay}s, bg_vol={bg_volume}, music_vol={music_volume}")
         
         clips_escenas = []
         duracion_total = 0
@@ -109,12 +111,13 @@ class Pipeline4Video:
             # Aplicar fade in al inicio y fade out al final
             image_clip = image_clip.with_effects([vfx.FadeIn(fade_duration), vfx.FadeOut(fade_duration)])
             
-            # Buscar y cargar sonido de fondo
-            bg_sound_path = self._get_background_sound(escena.get("sonido_fondo", ""))
+            # Buscar y cargar sonido de fondo AMBIENTAL basado en el ESCENARIO
+            imagen_descripcion = escena.get("imagen_descripcion", "")
+            bg_sound_path = self._get_background_sound(imagen_descripcion)
             
             if bg_sound_path and Path(bg_sound_path).exists():
-                print(f"      🎵 Con sonido de fondo: {Path(bg_sound_path).name}")
-                # Cargar audio de fondo
+                print(f"      🎵 Sonido ambiental: {Path(bg_sound_path).name} (escenario: {imagen_descripcion[:40]}...)")
+                # Cargar audio de fondo ambiental
                 bg_audio = AudioFileClip(bg_sound_path).with_volume_scaled(bg_volume)
                 # El fondo empieza desde el inicio y dura toda la escena
                 bg_audio_clip = bg_audio.subclipped(0, min(bg_audio.duration, duration))
@@ -127,10 +130,10 @@ class Pipeline4Video:
                 # El diálogo empieza después del delay
                 voice_audio_delayed = voice_audio.with_start(dialog_delay)
                 
-                # Mezclar voz (con delay) + fondo (con fade)
+                # Mezclar voz (con delay) + fondo ambiental (con fade)
                 final_audio = CompositeAudioClip([bg_audio_clip, voice_audio_delayed])
             else:
-                print(f"      🔇 Sin sonido de fondo")
+                print(f"      🔇 Sin sonido ambiental para: {imagen_descripcion[:40]}...")
                 # Solo voz con delay
                 voice_audio_delayed = voice_audio.with_start(dialog_delay)
                 final_audio = voice_audio_delayed
@@ -149,8 +152,37 @@ class Pipeline4Video:
         print(f"\n   📦 Concatenando {len(clips_escenas)} escenas...")
         video_final = concatenate_videoclips(clips_escenas, method="compose")
         
+        # 🎵 AGREGAR MÚSICA DE FONDO A TODO EL VIDEO
+        song_path = self.sounds_dir / "song.mp3"
+        if song_path.exists():
+            print(f"   🎶 Agregando música de fondo a todo el video: {song_path.name}")
+            music_audio = AudioFileClip(str(song_path)).with_volume_scaled(music_volume)
+            
+            # Hacer loop de la música si el video es más largo
+            if music_audio.duration < duracion_total:
+                # Repetir la música en loop
+                num_loops = int(duracion_total / music_audio.duration) + 1
+                music_audio = music_audio.with_effects([afx.AudioLoop(duration=duracion_total)])
+                print(f"      🔁 Música en loop para cubrir {duracion_total:.2f}s")
+            else:
+                # Cortar la música a la duración del video
+                music_audio = music_audio.subclipped(0, duracion_total)
+            
+            # Aplicar fade in/out a la música
+            music_audio = music_audio.with_effects([
+                afx.AudioFadeIn(1.0),
+                afx.AudioFadeOut(2.0)
+            ])
+            
+            # Combinar el audio existente del video con la música de fondo
+            final_audio_with_music = CompositeAudioClip([video_final.audio, music_audio])
+            video_final = video_final.with_audio(final_audio_with_music)
+            print(f"      ✅ Música de fondo agregada (volumen: {music_volume})")
+        else:
+            print(f"   ⚠️  No se encontró song.mp3, video sin música de fondo")
+        
         # Exportar video
-        print(f"   💾 Exportando video a: {output_path}")
+        print(f"\n   💾 Exportando video a: {output_path}")
         video_final.write_videofile(
             str(output_path),
             fps=24,
@@ -165,57 +197,65 @@ class Pipeline4Video:
         
         return str(output_path)
     
-    def _get_background_sound(self, descripcion: str) -> str | None:
+    def _get_background_sound(self, imagen_descripcion: str) -> str | None:
         """
-        Busca el archivo de sonido de fondo apropiado según la descripción.
+        Busca el archivo de sonido de fondo apropiado según la descripción de la imagen/escena.
         
         Args:
-            descripcion: Descripción del sonido de fondo del guion (ej: "Pájaros cantando")
+            imagen_descripcion: Descripción de la imagen (escenario) del guion
             
         Returns:
             Ruta al archivo de audio o None si no se encuentra
         """
-        # Mapeo de palabras clave a archivos de sonido disponibles
+        # Mapeo de palabras clave de ESCENARIOS a archivos de sonido disponibles
         # Basado en los archivos en assets/background_sounds/
-        mapeo = {
+        mapeo_escenarios = {
+            # Parque
             "parque": "park.mp3",
             "park": "park.mp3",
+            "columpio": "park.mp3",
+            "plaza": "park.mp3",
+            
+            # Bosque/Naturaleza
             "bosque": "forest.mp3",
             "forest": "forest.mp3",
             "árbol": "forest.mp3",
+            "árboles": "forest.mp3",
             "naturaleza": "forest.mp3",
+            
+            # Hospital
             "hospital": "hospital.mp3",
             "médico": "hospital.mp3",
             "doctor": "hospital.mp3",
+            "clínica": "hospital.mp3",
+            
+            # Escuela/Colegio
             "escuela": "school.mp3",
             "school": "school.mp3",
             "colegio": "school.mp3",
             "clase": "school.mp3",
+            "aula": "school.mp3",
+            "salón": "school.mp3",
+            
+            # Calle
             "calle": "street.mp3",
             "street": "street.mp3",
             "ciudad": "street.mp3",
-            "canción": "song.mp3",
-            "música": "song.mp3",
-            "song": "song.mp3",
+            "vereda": "street.mp3",
+            "acera": "street.mp3",
         }
         
-        if not descripcion:
+        if not imagen_descripcion:
             return None
         
-        descripcion_lower = descripcion.lower()
+        descripcion_lower = imagen_descripcion.lower()
         
-        # Buscar coincidencia con las palabras clave
-        for keyword, filename in mapeo.items():
+        # Buscar coincidencia con las palabras clave de escenarios
+        for keyword, filename in mapeo_escenarios.items():
             if keyword in descripcion_lower:
                 filepath = self.sounds_dir / filename
                 if filepath.exists():
                     return str(filepath)
-        
-        # Si no encuentra coincidencia, intentar buscar directamente el archivo
-        # por si la descripción ya es un nombre de archivo
-        possible_file = self.sounds_dir / descripcion
-        if possible_file.exists():
-            return str(possible_file)
         
         return None
 

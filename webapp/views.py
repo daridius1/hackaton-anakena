@@ -64,7 +64,7 @@ def index(request):
             'titulo': 'La Importancia de Compartir',
             'descripcion': 'Aprende por qué compartir con los demás nos hace felices',
             'thumbnail': 'ejemplos/compartir_thumb.jpg',
-            'video_id': 'video_dfc77384',  # ID del video para usar con la vista resultado
+            'video_id': 'video_3a6c25c5',  # ID del video para usar con la vista resultado (sin .mp4)
             'duracion': '8 min',
         },
         {

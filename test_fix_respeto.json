@@ -1,0 +1,101 @@
+{
+  "guion": {
+    "metadata": {
+      "titulo": "El Tesoro del Abuelo Carlos",
+      "leccion": "respeta a tus mayores",
+      "duracion_estimada": "7 minutos",
+      "personajes": [
+        {
+          "nombre": "Lucas",
+          "tipo_voz": "aguda y entusiasta",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niño curioso y aventurero"
+        },
+        {
+          "nombre": "Sofia",
+          "tipo_voz": "clara y reflexiva",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niña inteligente y observadora"
+        },
+        {
+          "nombre": "Carlos",
+          "tipo_voz": "grave y cálida",
+          "edad_aproximada": "70 años",
+          "caracteristicas": "abuelo sabio y paciente"
+        }
+      ]
+    },
+    "escenas": [
+      {
+        "numero_escena": 1,
+        "sonido_fondo": "pájaros cantando, risas de niños",
+        "imagen_descripcion": "Lucas y Sofia jugando en el parque, corriendo entre los árboles",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "¡Corramos más rápido! Quiero llegar primero al viejo roble",
+          "emocion": "emocionado"
+        }
+      },
+      {
+        "numero_escena": 2,
+        "sonido_fondo": "viento en las hojas, pasos sobre la hierba",
+        "imagen_descripcion": "Los niños encuentran al abuelo Carlos sentado bajo el árbol",
+        "dialogo": {
+          "personaje": "Sofia",
+          "texto": "Abuelo Carlos, ¿por qué siempre vienes a este árbol?",
+          "emocion": "curiosa"
+        }
+      },
+      {
+        "numero_escena": 3,
+        "sonido_fondo": "susurro del viento, hojas crujiendo",
+        "imagen_descripcion": "El abuelo señala hacia el bosque con su bastón",
+        "dialogo": {
+          "personaje": "Carlos",
+          "texto": "Este árbol guarda un secreto. Cuando era joven, descubrí algo maravilloso",
+          "emocion": "nostálgico"
+        }
+      },
+      {
+        "numero_escena": 4,
+        "sonido_fondo": "exclamaciones de sorpresa, pájaros revoloteando",
+        "imagen_descripcion": "Lucas intenta trepar el árbol rápidamente sin escuchar",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "¡Yo lo encuentro primero! No necesito ayuda de nadie",
+          "emocion": "impaciente"
+        }
+      },
+      {
+        "numero_escena": 5,
+        "sonido_fondo": "suspiro del abuelo, hojas cayendo",
+        "imagen_descripcion": "El abuelo muestra paciencia mientras Lucas se equivoca",
+        "dialogo": {
+          "personaje": "Carlos",
+          "texto": "La prisa no es buena consejera. Déjame mostrarte el camino correcto",
+          "emocion": "sabio"
+        }
+      },
+      {
+        "numero_escena": 6,
+        "sonido_fondo": "risas felices, aplausos",
+        "imagen_descripcion": "Los niños siguen las instrucciones del abuelo y encuentran un nido de pájaros",
+        "dialogo": {
+          "personaje": "Sofia",
+          "texto": "¡Qué hermoso! Sin tu ayuda, nunca lo habríamos encontrado",
+          "emocion": "agradecida"
+        }
+      },
+      {
+        "numero_escena": 7,
+        "sonido_fondo": "abrazos, voces contentas",
+        "imagen_descripcion": "Los tres observan los pajaritos desde lejos, respetando su espacio",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "Tenías razón, abuelo. Los mayores saben cosas importantes",
+          "emocion": "arrepentido"
+        }
+      }
+    ]
+  }
+}

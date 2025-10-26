@@ -4,20 +4,17 @@ from .models import PerfilUsuario, InteraccionSugerencia
 
 @admin.register(PerfilUsuario)
 class PerfilUsuarioAdmin(admin.ModelAdmin):
-    list_display = ('user', 'edad_nino', 'nivel_complejidad', 'estilo_narrativo', 'created_at')
-    list_filter = ('nivel_complejidad', 'estilo_narrativo', 'created_at')
+    list_display = ('user', 'valores_count', 'created_at')
+    list_filter = ('created_at',)
     search_fields = ('user__username', 'user__email')
     
     fieldsets = (
         ('Usuario', {
             'fields': ('user',)
         }),
-        ('Preferencias Básicas', {
-            'fields': ('edad_nino', 'nivel_complejidad', 'estilo_narrativo')
-        }),
-        ('Preferencias de Contenido', {
-            'fields': ('temas_favoritos', 'valores_prioritarios'),
-            'description': 'Usar formato JSON: ["item1", "item2"]'
+        ('Valores Prioritarios', {
+            'fields': ('valores_prioritarios',),
+            'description': 'Usar formato JSON: ["empatía", "honestidad", "responsabilidad"]'
         }),
         ('Metadata', {
             'fields': ('created_at', 'updated_at'),
@@ -26,6 +23,11 @@ class PerfilUsuarioAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ('created_at', 'updated_at')
+    
+    def valores_count(self, obj):
+        """Muestra cantidad de valores prioritarios"""
+        return len(obj.valores_prioritarios) if obj.valores_prioritarios else 0
+    valores_count.short_description = 'Valores'
 
 
 @admin.register(InteraccionSugerencia)

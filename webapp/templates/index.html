@@ -128,15 +128,15 @@
                         {{ ejemplo.descripcion }}
                     </p>
                     
-                    <!-- Botón para abrir modal con video -->
+                    <!-- Botón para ver video (redirige a vista resultado) -->
                     <div class="flex items-center justify-between">
                         <span class="text-xs text-gray-500">Video de ejemplo</span>
-                        <button 
-                            onclick="openVideoModal('{{ ejemplo.video }}', '{{ ejemplo.titulo }}', '{{ ejemplo.descripcion }}')"
-                            class="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-200 transition transform hover:scale-105"
+                        <a 
+                            href="{% url 'webapp:resultado' video_id=ejemplo.video_id %}"
+                            class="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-200 transition transform hover:scale-105 inline-block"
                         >
                             ▶ Ver Video
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -179,109 +179,10 @@
     
 </div>
 
-<!-- Modal para reproducir videos -->
-<div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-50" style="backdrop-filter: blur(5px);">
-    <div class="bg-white rounded-xl shadow-2xl w-11/12 max-w-4xl overflow-hidden">
-        <!-- Header del modal -->
-        <div class="bg-gradient-to-r from-purple-600 to-pink-500 p-6 flex justify-between items-center">
-            <div>
-                <h3 id="modalTitle" class="text-2xl font-bold text-white"></h3>
-                <p id="modalDescription" class="text-purple-100 mt-1"></p>
-            </div>
-            <button onclick="closeVideoModal()" class="text-white hover:text-gray-200 transition-colors">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
-        
-        <!-- Reproductor Video.js -->
-        <div class="p-6 bg-gray-900">
-            <video id="videoPlayer" class="video-js vjs-big-play-centered vjs-theme-fantasy" controls preload="auto">
-                <p class="vjs-no-js">
-                    Para ver este video, por favor habilita JavaScript, y considera actualizar tu navegador a uno que 
-                    <a href="https://videojs.com/html5-video-support/" target="_blank">soporta video HTML5</a>
-                </p>
-            </video>
-        </div>
-        
-        <!-- Footer del modal -->
-        <div class="p-4 bg-gray-50 flex justify-end">
-            <button onclick="closeVideoModal()" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                Cerrar
-            </button>
-        </div>
-    </div>
+    
 </div>
 
 <script>
-let player = null;
-
-function openVideoModal(videoPath, title, description) {
-    // Actualizar contenido del modal
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalDescription').textContent = description;
-    
-    // Inicializar Video.js si no existe
-    if (!player) {
-        player = videojs('videoPlayer', {
-            controls: true,
-            autoplay: false,
-            preload: 'auto',
-            fluid: true,
-            aspectRatio: '16:9',
-            controlBar: {
-                volumePanel: {
-                    inline: false
-                },
-                pictureInPictureToggle: false
-            }
-        });
-    }
-    
-    // Establecer el source y reproducir
-    player.src({ type: 'video/mp4', src: videoPath });
-    player.load();
-    player.play();
-    
-    // Mostrar modal
-    const modal = document.getElementById('videoModal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeVideoModal(event) {
-    // Si se hace click en el fondo (no en el contenido), cerrar
-    if (event && event.target.id !== 'videoModal') return;
-    
-    // Pausar y resetear video
-    if (player) {
-        player.pause();
-        player.currentTime(0);
-    }
-    
-    // Ocultar modal
-    const modal = document.getElementById('videoModal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = 'auto';
-}
-
-// Cerrar modal con tecla ESC
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeVideoModal();
-    }
-});
-
-// Cerrar modal al hacer click fuera del contenido
-document.getElementById('videoModal')?.addEventListener('click', function(event) {
-    if (event.target.id === 'videoModal') {
-        closeVideoModal();
-    }
-});
-
 // Función para usar una sugerencia
 function usarSugerencia(moraleja) {
     const textarea = document.getElementById('moraleja');
@@ -299,57 +200,4 @@ function usarSugerencia(moraleja) {
 }
 </script>
 
-{% endblock %}
-
-{% block extra_scripts %}
-<script>
-    function openVideoModal(videoPath, title, description) {
-        const modal = document.getElementById('videoModal');
-        const video = document.getElementById('modalVideo');
-        const videoSource = document.getElementById('modalVideoSource');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDescription = document.getElementById('modalDescription');
-        
-        // Set video source
-        videoSource.src = '/media/' + videoPath;
-        video.load();
-        
-        // Set title and description
-        modalTitle.textContent = title;
-        modalDescription.textContent = description;
-        
-        // Show modal with animation
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        
-        // Prevent body scroll
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeVideoModal(event) {
-        // Si se hizo click en el backdrop (fondo oscuro), cerrar
-        if (event && event.target.id !== 'videoModal') return;
-        
-        const modal = document.getElementById('videoModal');
-        const video = document.getElementById('modalVideo');
-        
-        // Pause and reset video
-        video.pause();
-        video.currentTime = 0;
-        
-        // Hide modal
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        
-        // Restore body scroll
-        document.body.style.overflow = 'auto';
-    }
-    
-    // Close modal with ESC key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            closeVideoModal();
-        }
-    });
-</script>
 {% endblock %}

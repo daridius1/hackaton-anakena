@@ -46,80 +46,52 @@ class PreferenceEngine:
             return self._get_sugerencias_default()
     
     def _build_suggestion_prompt(self, perfil, historial, n):
-        """Construye el prompt para generar sugerencias"""
+        """Construye el prompt para generar sugerencias basadas solo en valores pendientes"""
         
-        # Obtener valores ya cubiertos
-        valores_vistos = set()
+        # Obtener valores ya cubiertos del historial
+        valores_trabajados = set()
         moralejas_vistas = []
-        moralejas_seleccionadas = []
-        moralejas_rechazadas = []
         
         for interaccion in historial[:20]:  # Últimas 20 interacciones
-            valores_vistos.update(interaccion.valores_cubiertos)
+            valores_trabajados.update(interaccion.valores_cubiertos)
             moralejas_vistas.append(interaccion.moraleja_sugerida)
-            
-            # Analizar qué fue seleccionado vs rechazado
-            if interaccion.fue_seleccionada or interaccion.video_generado:
-                moralejas_seleccionadas.append({
-                    'moraleja': interaccion.moraleja_sugerida,
-                    'valores': interaccion.valores_cubiertos
-                })
-            else:
-                moralejas_rechazadas.append(interaccion.moraleja_sugerida)
         
-        # Valores pendientes
-        valores_prioritarios = set(perfil.valores_prioritarios)
-        valores_pendientes = valores_prioritarios - valores_vistos
+        # Valores pendientes (los que el usuario quiere pero no ha trabajado)
+        valores_prioritarios = set(perfil.valores_prioritarios) if perfil.valores_prioritarios else set()
+        valores_pendientes = valores_prioritarios - valores_trabajados
         
-        # Detectar patrones: ¿Qué valores se seleccionan más?
-        valores_populares = []
-        if moralejas_seleccionadas:
-            contador_valores = {}
-            for item in moralejas_seleccionadas:
-                for valor in item['valores']:
-                    contador_valores[valor] = contador_valores.get(valor, 0) + 1
-            valores_populares = sorted(contador_valores.items(), key=lambda x: x[1], reverse=True)[:3]
-            valores_populares = [v[0] for v in valores_populares]
+        # Si no hay valores pendientes, usar todos los valores prioritarios
+        if not valores_pendientes:
+            valores_pendientes = valores_prioritarios
         
-        return f"""Eres un agente educativo experto en crear contenido personalizado para niños.
-Tu trabajo es sugerir moralejas educativas basándote en el perfil del usuario Y SU HISTORIAL.
+        # Si no hay valores prioritarios definidos, usar valores educativos generales
+        if not valores_pendientes:
+            valores_pendientes = {'empatía', 'honestidad', 'responsabilidad', 'respeto', 'solidaridad'}
+        
+        return f"""Eres un agente educativo experto en crear contenido infantil educativo.
+Tu trabajo es sugerir moralejas que enseñen valores que el usuario AÚN NO ha trabajado.
 
-PERFIL DEL USUARIO:
-- Edad del niño: {perfil.edad_nino} años
-- Nivel de complejidad: {perfil.nivel_complejidad}
-- Estilo narrativo preferido: {perfil.estilo_narrativo}
-- Temas favoritos: {', '.join(perfil.temas_favoritos) if perfil.temas_favoritos else 'ninguno especificado'}
-- Valores prioritarios: {', '.join(perfil.valores_prioritarios) if perfil.valores_prioritarios else 'ninguno especificado'}
+VALORES PRIORITARIOS DEL USUARIO: {', '.join(valores_prioritarios) if valores_prioritarios else 'no especificados'}
+VALORES YA TRABAJADOS: {', '.join(valores_trabajados) if valores_trabajados else 'ninguno'}
+VALORES PENDIENTES (PRIORIDAD MÁXIMA): {', '.join(valores_pendientes)}
 
-ANÁLISIS DEL HISTORIAL:
-- Total de sugerencias mostradas: {len(moralejas_vistas)}
-- Moralejas que SÍ seleccionó ({len(moralejas_seleccionadas)}): {', '.join([m['moraleja'] for m in moralejas_seleccionadas[:5]]) if moralejas_seleccionadas else 'ninguna aún'}
-- Moralejas que NO seleccionó (rechazadas): {', '.join(moralejas_rechazadas[:5]) if moralejas_rechazadas else 'ninguna'}
-- Valores más populares (los que más elige): {', '.join(valores_populares) if valores_populares else 'sin datos'}
-- Valores ya cubiertos: {', '.join(valores_vistos) if valores_vistos else 'ninguno'}
-- Valores pendientes (PRIORIDAD ALTA): {', '.join(valores_pendientes) if valores_pendientes else 'todos cubiertos'}
-
-PATRÓN DETECTADO:
-{self._describir_patron(moralejas_seleccionadas, valores_populares, perfil)}
+MORALEJAS YA VISTAS (evitar repetir): {', '.join(moralejas_vistas[:10]) if moralejas_vistas else 'ninguna'}
 
 INSTRUCCIONES:
-Genera {n} sugerencias de moralejas que:
-1. **PRIORIDAD MÁXIMA:** Cubrir valores pendientes que aún no ha visto
-2. **APRENDER DEL HISTORIAL:** Evitar temas similares a los rechazados
-3. **REFORZAR PATRONES:** Si le gustan ciertos valores, incluir más de esos
-4. Se adapten a la edad ({perfil.edad_nino} años) y nivel ({perfil.nivel_complejidad})
-5. Incorporen los temas favoritos: {', '.join(perfil.temas_favoritos) if perfil.temas_favoritos else 'general'}
-6. Tengan un enfoque {perfil.estilo_narrativo}
-7. **NO REPETIR** moralejas ya vistas
+Genera {n} sugerencias de moralejas educativas que:
+1. **PRIORIDAD:** Cubrir los valores pendientes
+2. Sean apropiadas para niños de 5-10 años
+3. **NO REPETIR** moralejas ya vistas
+4. Sean simples y claras (máximo 60 caracteres)
 
 Responde ÚNICAMENTE con un JSON válido (sin markdown):
 {{
   "sugerencias": [
     {{
-      "moraleja": "texto corto de la moraleja (máx 60 caracteres)",
-      "razon": "por qué se sugiere BASADO EN SU HISTORIAL",
-      "valores": ["lista", "de", "valores"],
-      "prioridad": 1-5
+      "moraleja": "texto corto de la moraleja (ej: 'respetar a los mayores')",
+      "razon": "por qué se sugiere (qué valor cubre que falta)",
+      "valores": ["lista", "de", "valores", "que", "enseña"],
+      "prioridad": 5
     }}
   ]
 }}"""
@@ -168,16 +140,6 @@ Responde ÚNICAMENTE con un JSON válido (sin markdown):
             content = content.replace('```', '').strip()
         
         return content
-    
-    def _describir_patron(self, moralejas_seleccionadas, valores_populares, perfil):
-        """Describe el patrón de comportamiento del usuario"""
-        if not moralejas_seleccionadas:
-            return f"Usuario nuevo, sin historial. Usar valores prioritarios: {', '.join(perfil.valores_prioritarios)}"
-        
-        if valores_populares:
-            return f"Este usuario prefiere historias sobre: {', '.join(valores_populares)}. Sugerir más de estos temas."
-        
-        return "Historial limitado, explorar diferentes valores."
     
     def _get_sugerencias_default(self):
         """Sugerencias por defecto en caso de error"""

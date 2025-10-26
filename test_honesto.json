@@ -1,0 +1,103 @@
+{
+  "guion": {
+    "metadata": {
+      "titulo": "La verdad siempre brilla",
+      "leccion": "ser honesto",
+      "duracion_estimada": "12 minutos",
+      "personajes": [
+        {
+          "nombre": "Lucas",
+          "tipo_voz": "aguda y entusiasta",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niño curioso, pelo castaño desordenado"
+        },
+        {
+          "nombre": "Sofia",
+          "tipo_voz": "clara y reflexiva",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niña inteligente, lleva gafas"
+        },
+        {
+          "nombre": "Carlos",
+          "tipo_voz": "grave y calmada",
+          "edad_aproximada": "70 años",
+          "caracteristicas": "abuelo sabio, barba blanca"
+        },
+        {
+          "nombre": "Juan",
+          "tipo_voz": "amable y firme",
+          "edad_aproximada": "40 años",
+          "caracteristicas": "adulto amable, sonrisa constante"
+        },
+        {
+          "nombre": "Martina",
+          "tipo_voz": "dulce y comprensiva",
+          "edad_aproximada": "35 años",
+          "caracteristicas": "mujer adulta, pelo largo"
+        }
+      ]
+    },
+    "escenas": [
+      {
+        "numero_escena": 1,
+        "sonido_fondo": "risas de niños y pájaros cantando",
+        "imagen_descripcion": "Lucas y Sofia jugando en el parque con una pelota roja",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "¡Mira Sofia, qué pelota más bonita! La encontré junto al columpio",
+          "emocion": "feliz"
+        }
+      },
+      {
+        "numero_escena": 2,
+        "sonido_fondo": "campanas del colegio",
+        "imagen_descripcion": "Lucas mostrando la pelota a Juan en el patio del colegio",
+        "dialogo": {
+          "personaje": "Juan",
+          "texto": "Lucas, esa pelota se parece mucho a la que perdió Martina ayer. ¿Sabes de quién es?",
+          "emocion": "curioso"
+        }
+      },
+      {
+        "numero_escena": 3,
+        "sonido_fondo": "viento suave en el bosque",
+        "imagen_descripcion": "Lucas sentado en un tronco en el bosque, mirando la pelota con preocupación",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "No quiero devolverla... pero tampoco quiero mentir. ¿Qué hago?",
+          "emocion": "confundido"
+        }
+      },
+      {
+        "numero_escena": 4,
+        "sonido_fondo": "cafetera burbujeante",
+        "imagen_descripcion": "Carlos y Lucas en la habitación, el abuelo prepara chocolate caliente",
+        "dialogo": {
+          "personaje": "Carlos",
+          "texto": "Hijo, la verdad duele menos que una mentira. Cuando eres honesto, tu corazón se siente liviano",
+          "emocion": "sabio"
+        }
+      },
+      {
+        "numero_escena": 5,
+        "sonido_fondo": "tranquilidad de la calle al atardecer",
+        "imagen_descripcion": "Lucas entregando la pelota a Martina en la calle",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "Señora Martina, encontré su pelota. Al principio no quería devolvérsela, pero mi abuelo me enseñó que ser honesto es mejor",
+          "emocion": "valiente"
+        }
+      },
+      {
+        "numero_escena": 6,
+        "sonido_fondo": "risas compartidas",
+        "imagen_descripcion": "Martina abrazando a Lucas mientras todos sonríen en el parque",
+        "dialogo": {
+          "personaje": "Martina",
+          "texto": "Gracias por tu honestidad, Lucas. Ahora podemos jugar todos juntos con la pelota",
+          "emocion": "agradecida"
+        }
+      }
+    ]
+  }
+}

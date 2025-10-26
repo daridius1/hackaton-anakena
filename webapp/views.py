@@ -64,7 +64,7 @@ def index(request):
             'titulo': 'La Importancia de Compartir',
             'descripcion': 'Aprende por qué compartir con los demás nos hace felices',
             'thumbnail': 'ejemplos/compartir_thumb.jpg',
-            'video': 'ejemplos/ejemplo1.mp4',
+            'video_id': 'video_dfc77384',  # ID del video para usar con la vista resultado
             'duracion': '8 min',
         },
         {
@@ -72,7 +72,7 @@ def index(request):
             'titulo': 'No Hablar con Extraños',
             'descripcion': 'Aprende a estar seguro y protegido',
             'thumbnail': 'ejemplos/extranos_thumb.jpg',
-            'video': 'ejemplos/extranos.mp4',
+            'video_id': 'ejemplo_extranos',
             'duracion': '7 min',
         },
         {
@@ -80,7 +80,7 @@ def index(request):
             'titulo': 'Ser Honesto Siempre',
             'descripcion': 'La verdad siempre es el mejor camino',
             'thumbnail': 'ejemplos/honesto_thumb.jpg',
-            'video': 'ejemplos/honesto.mp4',
+            'video_id': 'ejemplo_honesto',
             'duracion': '8 min',
         },
         {
@@ -88,7 +88,7 @@ def index(request):
             'titulo': 'Cuidar el Medio Ambiente',
             'descripcion': 'Pequeñas acciones para un planeta mejor',
             'thumbnail': 'ejemplos/ambiente_thumb.jpg',
-            'video': 'ejemplos/ambiente.mp4',
+            'video_id': 'ejemplo_ambiente',
             'duracion': '9 min',
         },
     ]
@@ -145,14 +145,9 @@ def generar_video(request):
     }
     
     try:
-        # 🆕 Obtener perfil del usuario si está logueado
-        perfil = None
-        if request.user.is_authenticated and hasattr(request.user, 'perfil'):
-            perfil = request.user.perfil
-        
-        # PIPELINE 1: Guion (con personalización)
-        PROGRESS_STORAGE[task_id].update({'step': 'Generando guion personalizado...', 'progress': 10})
-        pipeline1 = Pipeline1Guion(perfil_usuario=perfil)  # 🆕 Pasar perfil
+        # PIPELINE 1: Guion
+        PROGRESS_STORAGE[task_id].update({'step': 'Generando guion...', 'progress': 10})
+        pipeline1 = Pipeline1Guion()
         guion_path = f"guion_{task_id}.json"
         guion = pipeline1.generar(moraleja, output_path=guion_path)
         

@@ -1,0 +1,103 @@
+{
+  "guion": {
+    "metadata": {
+      "titulo": "El Planeta que Queremos Cuidar",
+      "leccion": "Cuidar el medio ambiente y no contaminar",
+      "duracion_estimada": "8 minutos",
+      "personajes": [
+        {
+          "nombre": "Lucas",
+          "tipo_voz": "aguda infantil",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niño curioso, observador"
+        },
+        {
+          "nombre": "Sofia",
+          "tipo_voz": "aguda infantil",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niña inteligente, explicativa"
+        },
+        {
+          "nombre": "Carlos",
+          "tipo_voz": "grave calmada",
+          "edad_aproximada": "70 años",
+          "caracteristicas": "abuelo sabio, paciente"
+        },
+        {
+          "nombre": "Juan",
+          "tipo_voz": "media amable",
+          "edad_aproximada": "40 años",
+          "caracteristicas": "adulto amable, guía"
+        },
+        {
+          "nombre": "Martina",
+          "tipo_voz": "media cálida",
+          "edad_aproximada": "35 años",
+          "caracteristicas": "mujer adulta, educadora"
+        }
+      ]
+    },
+    "escenas": [
+      {
+        "numero_escena": 1,
+        "sonido_fondo": "pájaros cantando, niños jugando",
+        "imagen_descripcion": "Lucas y Sofia en el parque, ven basura en el suelo",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "Mira Sofia, hay papeles y plásticos en el pasto. ¿Por qué la gente tira basura aquí?",
+          "emocion": "curioso"
+        }
+      },
+      {
+        "numero_escena": 2,
+        "sonido_fondo": "viento suave, hojas moviéndose",
+        "imagen_descripcion": "Carlos se acerca a los niños en el parque",
+        "dialogo": {
+          "personaje": "Carlos",
+          "texto": "Hola niños. Es triste ver nuestro parque sucio. La contaminación hace daño a los animalitos y a las plantas.",
+          "emocion": "preocupado"
+        }
+      },
+      {
+        "numero_escena": 3,
+        "sonido_fondo": "campanas de colegio",
+        "imagen_descripcion": "En el colegio, Martina muestra dibujos de un planeta limpio y otro contaminado",
+        "dialogo": {
+          "personaje": "Martina",
+          "texto": "Niños, cuando tiramos basura, el planeta se enferma. Los peces se comen el plástico y los árboles no pueden respirar bien.",
+          "emocion": "explicativa"
+        }
+      },
+      {
+        "numero_escena": 4,
+        "sonido_fondo": "coches pasando lejos",
+        "imagen_descripcion": "En la calle, Juan recoge basura con los niños",
+        "dialogo": {
+          "personaje": "Juan",
+          "texto": "¡Miren! Si cada uno pone su basura en su lugar, tendremos calles limpias y un planeta más feliz.",
+          "emocion": "motivador"
+        }
+      },
+      {
+        "numero_escena": 5,
+        "sonido_fondo": "risas de niños, pájaros",
+        "imagen_descripcion": "En el bosque, los niños ven animales y plantas saludables",
+        "dialogo": {
+          "personaje": "Sofia",
+          "texto": "¡Qué bonito es el bosque cuando está limpio! Los pajaritos cantan y las flores huelen rico.",
+          "emocion": "feliz"
+        }
+      },
+      {
+        "numero_escena": 6,
+        "sonido_fondo": "aplausos suaves",
+        "imagen_descripcion": "En el parque, todos juntos celebran con el lugar limpio",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "Ahora entiendo. No contaminar es como cuidar nuestra casa grande: el planeta Tierra.",
+          "emocion": "sorprendido"
+        }
+      }
+    ]
+  }
+}

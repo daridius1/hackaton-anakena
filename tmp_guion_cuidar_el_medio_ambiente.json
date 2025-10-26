@@ -1,0 +1,103 @@
+{
+  "guion": {
+    "metadata": {
+      "titulo": "Los Guardianes del Planeta",
+      "leccion": "cuidar el medio ambiente",
+      "duracion_estimada": "12 minutos",
+      "personajes": [
+        {
+          "nombre": "Lucas",
+          "tipo_voz": "aguda infantil",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niño curioso"
+        },
+        {
+          "nombre": "Sofia",
+          "tipo_voz": "aguda infantil",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "niña inteligente"
+        },
+        {
+          "nombre": "Carlos",
+          "tipo_voz": "grave serena",
+          "edad_aproximada": "70 años",
+          "caracteristicas": "abuelo sabio"
+        },
+        {
+          "nombre": "Juan",
+          "tipo_voz": "media cálida",
+          "edad_aproximada": "40 años",
+          "caracteristicas": "adulto amable"
+        },
+        {
+          "nombre": "Martina",
+          "tipo_voz": "media dulce",
+          "edad_aproximada": "35 años",
+          "caracteristicas": "mujer adulta"
+        }
+      ]
+    },
+    "escenas": [
+      {
+        "numero_escena": 1,
+        "sonido_fondo": "pájaros cantando, niños jugando",
+        "imagen_descripcion": "Parque con columpios y árboles, basura en el suelo",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "Mira Sofia, el parque está muy sucio. ¿Por qué la gente tira basura aquí?",
+          "emocion": "curioso"
+        }
+      },
+      {
+        "numero_escena": 2,
+        "sonido_fondo": "viento suave entre árboles",
+        "imagen_descripcion": "Bosque con animales y plantas, algunos árboles talados",
+        "dialogo": {
+          "personaje": "Sofia",
+          "texto": "¡Qué triste! Los árboles nos dan oxígeno y sombra. Debemos protegerlos.",
+          "emocion": "triste"
+        }
+      },
+      {
+        "numero_escena": 3,
+        "sonido_fondo": "campanas del colegio",
+        "imagen_descripcion": "Sala de clases con carteles sobre reciclaje",
+        "dialogo": {
+          "personaje": "Juan",
+          "texto": "Niños, reciclar ayuda a reducir la contaminación. Separen plástico, vidrio y papel.",
+          "emocion": "amable"
+        }
+      },
+      {
+        "numero_escena": 4,
+        "sonido_fondo": "agua corriendo, risas",
+        "imagen_descripcion": "Calle con gente regando plantas y limpiando",
+        "dialogo": {
+          "personaje": "Martina",
+          "texto": "¡Miren! Todos juntos podemos hacer nuestro barrio más limpio y verde.",
+          "emocion": "feliz"
+        }
+      },
+      {
+        "numero_escena": 5,
+        "sonido_fondo": "tranquilidad del parque",
+        "imagen_descripcion": "Parque limpio, niños plantando un árbol con Carlos",
+        "dialogo": {
+          "personaje": "Carlos",
+          "texto": "Cada árbol que plantamos es un regalo para el futuro. La Tierra es nuestra casa.",
+          "emocion": "sabio"
+        }
+      },
+      {
+        "numero_escena": 6,
+        "sonido_fondo": "pájaros y risas infantiles",
+        "imagen_descripcion": "Parque completamente limpio, niños jugando felices",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "¡Ahora sí! Nuestro parque está hermoso. Todos debemos cuidar la naturaleza.",
+          "emocion": "feliz"
+        }
+      }
+    ]
+  }
+}

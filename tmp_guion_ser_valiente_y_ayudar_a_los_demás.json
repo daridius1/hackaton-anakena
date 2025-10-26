@@ -1,0 +1,113 @@
+{
+  "guion": {
+    "metadata": {
+      "titulo": "El Corazón Valiente",
+      "leccion": "Ser valiente y ayudar a los demás",
+      "duracion_estimada": "12 minutos",
+      "personajes": [
+        {
+          "nombre": "Lucas",
+          "tipo_voz": "Aguda y entusiasta",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "Niño curioso, siempre quiere explorar y aprender cosas nuevas"
+        },
+        {
+          "nombre": "Sofia",
+          "tipo_voz": "Clara y reflexiva",
+          "edad_aproximada": "7 años",
+          "caracteristicas": "Niña inteligente, observadora y muy amigable"
+        },
+        {
+          "nombre": "Carlos",
+          "tipo_voz": "Grave y calmada",
+          "edad_aproximada": "70 años",
+          "caracteristicas": "Abuelo sabio, cuenta historias y da buenos consejos"
+        },
+        {
+          "nombre": "Juan",
+          "tipo_voz": "Amable y firme",
+          "edad_aproximada": "40 años",
+          "caracteristicas": "Adulto amable, siempre dispuesto a ayudar"
+        },
+        {
+          "nombre": "Martina",
+          "tipo_voz": "Dulce y maternal",
+          "edad_aproximada": "35 años",
+          "caracteristicas": "Mujer adulta, cariñosa y protectora"
+        }
+      ]
+    },
+    "escenas": [
+      {
+        "numero_escena": 1,
+        "sonido_fondo": "Pájaros cantando y niños jugando",
+        "imagen_descripcion": "Parque soleado con columpios y niños jugando",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "¡Mira Sofia! Ese pajarito se cayó del nido. ¿Qué hacemos?",
+          "emocion": "preocupado"
+        }
+      },
+      {
+        "numero_escena": 2,
+        "sonido_fondo": "Risas de niños y viento suave",
+        "imagen_descripcion": "Lucas y Sofia observando un pajarito en el suelo",
+        "dialogo": {
+          "personaje": "Sofia",
+          "texto": "Tengo miedo de tocarlo, pero no podemos dejarlo solo. ¡Seamos valientes!",
+          "emocion": "determinada"
+        }
+      },
+      {
+        "numero_escena": 3,
+        "sonido_fondo": "Pasos suaves y voces tranquilas",
+        "imagen_descripcion": "Los niños piden ayuda al abuelo Carlos en un banco del parque",
+        "dialogo": {
+          "personaje": "Carlos",
+          "texto": "Muy bien niños, ser valiente no es no tener miedo, es ayudar a pesar del miedo",
+          "emocion": "sabio"
+        }
+      },
+      {
+        "numero_escena": 4,
+        "sonido_fondo": "Tráfico leve y gente caminando",
+        "imagen_descripcion": "Calle donde Juan ayuda a una señora mayor a cruzar",
+        "dialogo": {
+          "personaje": "Juan",
+          "texto": "Cuando ayudamos a otros, nuestro corazón se llena de valor y alegría",
+          "emocion": "inspirador"
+        }
+      },
+      {
+        "numero_escena": 5,
+        "sonido_fondo": "Risas y aplausos",
+        "imagen_descripcion": "Colegio donde Martina organiza juegos cooperativos",
+        "dialogo": {
+          "personaje": "Martina",
+          "texto": "¡Miren cómo todos se ayudan! Eso es ser verdaderamente valientes",
+          "emocion": "feliz"
+        }
+      },
+      {
+        "numero_escena": 6,
+        "sonido_fondo": "Pájaros y brisa suave",
+        "imagen_descripcion": "Los niños logran devolver el pajarito a su nido con ayuda",
+        "dialogo": {
+          "personaje": "Lucas",
+          "texto": "¡Lo logramos! Ayudar al pajarito me hizo sentir muy valiente",
+          "emocion": "orgulloso"
+        }
+      },
+      {
+        "numero_escena": 7,
+        "sonido_fondo": "Música suave y alegre",
+        "imagen_descripcion": "Todos los personajes reunidos en el parque sonriendo",
+        "dialogo": {
+          "personaje": "Carlos",
+          "texto": "Recuerden niños: el verdadero valor está en usar nuestro corazón para ayudar a los demás",
+          "emocion": "conmovedor"
+        }
+      }
+    ]
+  }
+}

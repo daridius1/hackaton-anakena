@@ -5,35 +5,14 @@ from django.dispatch import receiver
 
 
 class PerfilUsuario(models.Model):
-    """Perfil educativo del usuario para personalizar sugerencias"""
-    
-    ESTILOS = [
-        ('aventurero', 'Aventurero (acción y descubrimientos)'),
-        ('educativo', 'Educativo (didáctico y explicativo)'),
-        ('fantastico', 'Fantástico (mágico e imaginativo)'),
-    ]
-    
-    NIVELES = [
-        ('simple', 'Simple (5-6 años)'),
-        ('medio', 'Medio (7-8 años)'),
-        ('avanzado', 'Avanzado (9-10 años)'),
-    ]
+    """Perfil educativo del usuario - solo para tracking de valores trabajados"""
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
     
-    # Preferencias básicas
-    edad_nino = models.IntegerField(default=7, help_text="Edad del niño (5-10 años)")
-    nivel_complejidad = models.CharField(max_length=20, choices=NIVELES, default='medio')
-    estilo_narrativo = models.CharField(max_length=50, choices=ESTILOS, default='aventurero')
-    
-    # Preferencias de contenido (JSON)
-    temas_favoritos = models.JSONField(
-        default=list,
-        help_text="Lista de temas: ['animales', 'aventura', 'ciencia']"
-    )
+    # Valores prioritarios que el usuario quiere trabajar
     valores_prioritarios = models.JSONField(
         default=list,
-        help_text="Lista de valores: ['empatía', 'honestidad', 'responsabilidad']"
+        help_text="Lista de valores educativos: ['empatía', 'honestidad', 'responsabilidad']"
     )
     
     # Metadata

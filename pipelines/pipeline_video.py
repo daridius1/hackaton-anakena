@@ -66,52 +66,47 @@ class Pipeline4Video:
         print(f"   Título: {metadata.get('titulo')}")
         print(f"   Total escenas: {len(escenas)}")
         
-        # TODO: IMPLEMENTAR ENSAMBLAJE CON MOVIEPY
-        # clips_escenas = []
-        # 
-        # for escena in escenas:
-        #     num = escena["numero_escena"]
-        #     
-        #     # Cargar imagen
-        #     image_path = self.images_dir / f"image_{num}.png"
-        #     
-        #     # Cargar audio del diálogo
-        #     dialogue_path = self.voices_dir / f"dialogue_{num}.mp3"
-        #     dialogue_audio = AudioFileClip(str(dialogue_path))
-        #     
-        #     # Crear clip de video con la imagen (duración = duración del audio)
-        #     image_clip = ImageClip(str(image_path), duration=dialogue_audio.duration)
-        #     
-        #     # Buscar y cargar sonido de fondo
-        #     bg_sound = self._get_background_sound(escena["sonido_fondo"])
-        #     if bg_sound:
-        #         bg_audio = AudioFileClip(bg_sound).volumex(0.3)  # Volumen más bajo
-        #         bg_audio = bg_audio.subclip(0, dialogue_audio.duration)
-        #         # Mezclar audio del diálogo con fondo
-        #         final_audio = CompositeAudioClip([dialogue_audio, bg_audio])
-        #     else:
-        #         final_audio = dialogue_audio
-        #     
-        #     # Añadir audio al clip de imagen
-        #     image_clip = image_clip.set_audio(final_audio)
-        #     clips_escenas.append(image_clip)
-        # 
-        # # Concatenar todas las escenas
-        # video_final = concatenate_videoclips(clips_escenas, method="compose")
-        # 
-        # # Exportar video
-        # video_final.write_videofile(
-        #     str(output_path),
-        #     fps=24,
-        #     codec='libx264',
-        #     audio_codec='aac'
-        # )
+        clips_escenas = []
         
-        # Por ahora, crear archivo placeholder
-        output_path.touch()
+        for escena in escenas:
+            num = escena["numero_escena"]
+            
+            # Cargar imagen
+            image_path = self.images_dir / f"image_{num}.png"
+            
+            # Cargar audio del diálogo
+            dialogue_path = self.voices_dir / f"dialogue_{num}.mp3"
+            dialogue_audio = AudioFileClip(str(dialogue_path))
+            
+            # Crear clip de video con la imagen (duración = duración del audio)
+            image_clip = ImageClip(str(image_path), duration=dialogue_audio.duration)
+            
+            # Buscar y cargar sonido de fondo
+            bg_sound = self._get_background_sound(escena.get("sonido_fondo", ""))
+            if bg_sound:
+                bg_audio = AudioFileClip(bg_sound).with_volume_scaled(0.3)  # Volumen más bajo
+                bg_audio = bg_audio.subclipped(0, min(bg_audio.duration, dialogue_audio.duration))
+                # Mezclar audio del diálogo con fondo
+                final_audio = CompositeAudioClip([dialogue_audio, bg_audio])
+            else:
+                final_audio = dialogue_audio
+            
+            # Añadir audio al clip de imagen
+            image_clip = image_clip.with_audio(final_audio)
+            clips_escenas.append(image_clip)
+        
+        # Concatenar todas las escenas
+        video_final = concatenate_videoclips(clips_escenas, method="compose")
+        
+        # Exportar video
+        video_final.write_videofile(
+            str(output_path),
+            fps=24,
+            codec='libx264',
+            audio_codec='aac'
+        )
         
         print(f"✅ Video generado en: {output_path}")
-        print(f"⚠️  NOTA: Pipeline 4 es un PLACEHOLDER. Instalar moviepy y descomentar código.")
         
         return str(output_path)
     

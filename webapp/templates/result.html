@@ -24,11 +24,130 @@
             <span>📖 Moraleja: {{ metadata.moraleja }}</span>
             <span>⏱️ Duración: {{ metadata.duracion }}</span>
             <span>🎬 Escenas: {{ metadata.num_escenas }}</span>
+            {% if metadata.imagenes_generadas %}
+            <span>🖼️ Imágenes: {{ metadata.imagenes_generadas }}</span>
+            {% endif %}
         </div>
     </div>
     {% endif %}
     
-    <!-- Video Player -->
+    <!-- Imágenes Generadas -->
+    {% if imagenes %}
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden mb-8 p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">🎨 Presentación del Cuento</h3>
+        
+        <!-- Slideshow Container -->
+        <div class="relative bg-black rounded-lg overflow-hidden" style="min-height: 400px;">
+            {% for imagen in imagenes %}
+            <div class="slideshow-image {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}">
+                <img src="/{{ imagen.path }}" alt="{{ imagen.nombre }}" class="w-full h-auto">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 text-white text-center">
+                    <p class="font-semibold">Escena {{ forloop.counter }} de {{ imagenes|length }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Controls -->
+            <button onclick="changeSlide(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full hover:bg-opacity-75 transition">
+                ◀
+            </button>
+            <button onclick="changeSlide(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full hover:bg-opacity-75 transition">
+                ▶
+            </button>
+            
+            <!-- Play/Pause Button -->
+            <button onclick="toggleAutoplay()" id="playPauseBtn" class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full hover:bg-opacity-75 transition">
+                ⏸️ Pausar
+            </button>
+        </div>
+        
+        <!-- Progress Indicators -->
+        <div class="flex justify-center mt-4 space-x-2">
+            {% for imagen in imagenes %}
+            <div class="slide-indicator w-3 h-3 rounded-full bg-gray-300 cursor-pointer {% if forloop.first %}bg-blue-600{% endif %}" 
+                 onclick="goToSlide({{ forloop.counter0 }})" 
+                 data-indicator="{{ forloop.counter0 }}">
+            </div>
+            {% endfor %}
+        </div>
+        
+        <style>
+            .slideshow-image {
+                display: none;
+                position: relative;
+            }
+            .slideshow-image.active {
+                display: block;
+            }
+        </style>
+        
+        <script>
+            let currentSlide = 0;
+            let autoplayInterval = null;
+            let isPlaying = true;
+            const slides = document.querySelectorAll('.slideshow-image');
+            const indicators = document.querySelectorAll('.slide-indicator');
+            const totalSlides = slides.length;
+            
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                indicators.forEach(ind => ind.classList.remove('bg-blue-600'));
+                indicators.forEach(ind => ind.classList.add('bg-gray-300'));
+                
+                if (n >= totalSlides) currentSlide = 0;
+                if (n < 0) currentSlide = totalSlides - 1;
+                
+                slides[currentSlide].classList.add('active');
+                indicators[currentSlide].classList.remove('bg-gray-300');
+                indicators[currentSlide].classList.add('bg-blue-600');
+            }
+            
+            function changeSlide(direction) {
+                currentSlide += direction;
+                if (currentSlide >= totalSlides) currentSlide = 0;
+                if (currentSlide < 0) currentSlide = totalSlides - 1;
+                showSlide(currentSlide);
+            }
+            
+            function goToSlide(n) {
+                currentSlide = n;
+                showSlide(currentSlide);
+            }
+            
+            function startAutoplay() {
+                autoplayInterval = setInterval(() => {
+                    changeSlide(1);
+                }, 3000); // 3 segundos por imagen
+            }
+            
+            function stopAutoplay() {
+                if (autoplayInterval) {
+                    clearInterval(autoplayInterval);
+                    autoplayInterval = null;
+                }
+            }
+            
+            function toggleAutoplay() {
+                const btn = document.getElementById('playPauseBtn');
+                if (isPlaying) {
+                    stopAutoplay();
+                    btn.textContent = '▶️ Reproducir';
+                    isPlaying = false;
+                } else {
+                    startAutoplay();
+                    btn.textContent = '⏸️ Pausar';
+                    isPlaying = true;
+                }
+            }
+            
+            // Iniciar autoplay
+            startAutoplay();
+        </script>
+    </div>
+    {% endif %}
+    
+    <!-- Video Player (si existe) -->
+    {% if tiene_video %}
     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden mb-8">
         <video 
             controls 
@@ -39,9 +158,21 @@
             Tu navegador no soporta el elemento de video.
         </video>
     </div>
+    {% else %}
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8 rounded-lg">
+        <div class="flex items-center">
+            <span class="text-2xl mr-3">⚠️</span>
+            <div>
+                <p class="font-bold">Video en desarrollo</p>
+                <p class="text-sm">Por ahora se generaron el guion y las imágenes. La generación de video estará disponible pronto.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     
     <!-- Actions -->
     <div class="flex items-center justify-center space-x-4 mb-8">
+        {% if tiene_video %}
         <a 
             href="{{ video_url }}" 
             download="{{ video_id }}.mp4"
@@ -50,13 +181,14 @@
             <span>📥</span>
             <span>Descargar Video</span>
         </a>
+        {% endif %}
         
         <a 
             href="{% url 'webapp:index' %}"
             class="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition flex items-center space-x-2"
         >
             <span>🎬</span>
-            <span>Generar Otro Video</span>
+            <span>Generar Otro Cuento</span>
         </a>
     </div>
     

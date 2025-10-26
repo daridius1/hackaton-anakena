@@ -33,10 +33,11 @@ class StoryAdapter:
         # Insertar adaptaciones en el prompt
         prompt_adaptado = f"""{prompt_base}
 
-PERSONALIZACIONES ESPECÍFICAS PARA ESTE USUARIO:
+PERSONALIZACIONES OPCIONALES (solo aplicar si es compatible con la moraleja principal):
 {adaptaciones}
 
-Ajusta el guion completo considerando estas personalizaciones."""
+⚠️ IMPORTANTE: La moraleja especificada arriba es PRIORITARIA sobre las personalizaciones.
+Si hay conflicto entre la moraleja y estas sugerencias de estilo, la moraleja SIEMPRE gana."""
         
         return prompt_adaptado
     

@@ -40,13 +40,23 @@ class Pipeline4Video:
         
         self.output_dir.mkdir(parents=True, exist_ok=True)
     
-    def generar(self, guion_path: str = "guion.json", output_name: str = "cuento_final.mp4") -> str:
+    def generar(
+        self, 
+        guion_path: str = "guion.json", 
+        output_name: str = "cuento_final.mp4",
+        fade_duration: float = 0.5,
+        dialog_delay: float = 0.8,
+        bg_volume: float = 0.3
+    ) -> str:
         """
         Ensambla el video final combinando todos los assets.
         
         Args:
             guion_path: Ruta al archivo guion.json
             output_name: Nombre del video de salida
+            fade_duration: Duración del fade in/out en segundos
+            dialog_delay: Tiempo de silencio antes del diálogo en segundos
+            bg_volume: Volumen del audio de fondo (0.0-1.0)
             
         Returns:
             Ruta al video generado
@@ -60,58 +70,98 @@ class Pipeline4Video:
         guion = data.get("guion", {})
         metadata = guion.get("metadata", {})
         escenas = guion.get("escenas", [])
+        titulo = metadata.get("titulo", "Sin título")
         
         output_path = self.output_dir / output_name
         
-        print(f"   Título: {metadata.get('titulo')}")
+        print(f"   Título: {titulo}")
         print(f"   Total escenas: {len(escenas)}")
+        print(f"   Configuración: fade={fade_duration}s, delay={dialog_delay}s, bg_vol={bg_volume}")
         
-        # TODO: IMPLEMENTAR ENSAMBLAJE CON MOVIEPY
-        # clips_escenas = []
-        # 
-        # for escena in escenas:
-        #     num = escena["numero_escena"]
-        #     
-        #     # Cargar imagen
-        #     image_path = self.images_dir / f"image_{num}.png"
-        #     
-        #     # Cargar audio del diálogo
-        #     dialogue_path = self.voices_dir / f"dialogue_{num}.mp3"
-        #     dialogue_audio = AudioFileClip(str(dialogue_path))
-        #     
-        #     # Crear clip de video con la imagen (duración = duración del audio)
-        #     image_clip = ImageClip(str(image_path), duration=dialogue_audio.duration)
-        #     
-        #     # Buscar y cargar sonido de fondo
-        #     bg_sound = self._get_background_sound(escena["sonido_fondo"])
-        #     if bg_sound:
-        #         bg_audio = AudioFileClip(bg_sound).volumex(0.3)  # Volumen más bajo
-        #         bg_audio = bg_audio.subclip(0, dialogue_audio.duration)
-        #         # Mezclar audio del diálogo con fondo
-        #         final_audio = CompositeAudioClip([dialogue_audio, bg_audio])
-        #     else:
-        #         final_audio = dialogue_audio
-        #     
-        #     # Añadir audio al clip de imagen
-        #     image_clip = image_clip.set_audio(final_audio)
-        #     clips_escenas.append(image_clip)
-        # 
-        # # Concatenar todas las escenas
-        # video_final = concatenate_videoclips(clips_escenas, method="compose")
-        # 
-        # # Exportar video
-        # video_final.write_videofile(
-        #     str(output_path),
-        #     fps=24,
-        #     codec='libx264',
-        #     audio_codec='aac'
-        # )
+        clips_escenas = []
+        duracion_total = 0
         
-        # Por ahora, crear archivo placeholder
-        output_path.touch()
+        for escena in escenas:
+            num = escena["numero_escena"]
+            print(f"\n   🎬 Procesando Escena {num}...")
+            
+            # Rutas de archivos
+            image_path = self.images_dir / f"image_{num}.png"
+            dialogue_path = self.voices_dir / f"dialogue_{num}.mp3"
+            
+            # Verificar que existan los archivos necesarios
+            if not image_path.exists():
+                print(f"      ⚠️  Imagen no encontrada: {image_path}")
+                continue
+            
+            if not dialogue_path.exists():
+                print(f"      ⚠️  Audio de diálogo no encontrado: {dialogue_path}")
+                continue
+            
+            # Cargar audio de voz para obtener duración
+            voice_audio = AudioFileClip(str(dialogue_path))
+            # Duración total: delay + voz + fade out
+            duration = dialog_delay + voice_audio.duration + fade_duration
+            
+            # Crear clip de imagen con esa duración
+            image_clip = ImageClip(str(image_path), duration=duration)
+            
+            # Aplicar fade in al inicio y fade out al final
+            image_clip = image_clip.with_effects([vfx.FadeIn(fade_duration), vfx.FadeOut(fade_duration)])
+            
+            # Buscar y cargar sonido de fondo
+            bg_sound_path = self._get_background_sound(escena.get("sonido_fondo", ""))
+            
+            if bg_sound_path and Path(bg_sound_path).exists():
+                print(f"      🎵 Con sonido de fondo: {Path(bg_sound_path).name}")
+                # Cargar audio de fondo
+                bg_audio = AudioFileClip(bg_sound_path).with_volume_scaled(bg_volume)
+                # El fondo empieza desde el inicio y dura toda la escena
+                bg_audio_clip = bg_audio.subclipped(0, min(bg_audio.duration, duration))
+                # Aplicar fade in/out al audio de fondo
+                bg_audio_clip = bg_audio_clip.with_effects([
+                    afx.AudioFadeIn(fade_duration), 
+                    afx.AudioFadeOut(fade_duration)
+                ])
+                
+                # El diálogo empieza después del delay
+                voice_audio_delayed = voice_audio.with_start(dialog_delay)
+                
+                # Mezclar voz (con delay) + fondo (con fade)
+                final_audio = CompositeAudioClip([bg_audio_clip, voice_audio_delayed])
+            else:
+                print(f"      🔇 Sin sonido de fondo")
+                # Solo voz con delay
+                voice_audio_delayed = voice_audio.with_start(dialog_delay)
+                final_audio = voice_audio_delayed
+            
+            # Asignar audio al clip
+            image_clip = image_clip.with_audio(final_audio)
+            clips_escenas.append(image_clip)
+            
+            duracion_total += duration
+            print(f"      ✅ Escena {num} procesada ({duration:.2f}s)")
         
-        print(f"✅ Video generado en: {output_path}")
-        print(f"⚠️  NOTA: Pipeline 4 es un PLACEHOLDER. Instalar moviepy y descomentar código.")
+        if not clips_escenas:
+            raise RuntimeError("No se pudo procesar ninguna escena. Verifica que existan las imágenes y audios.")
+        
+        # Concatenar todas las escenas
+        print(f"\n   📦 Concatenando {len(clips_escenas)} escenas...")
+        video_final = concatenate_videoclips(clips_escenas, method="compose")
+        
+        # Exportar video
+        print(f"   💾 Exportando video a: {output_path}")
+        video_final.write_videofile(
+            str(output_path),
+            fps=24,
+            codec='libx264',
+            audio_codec='aac',
+            preset='medium'
+        )
+        
+        print(f"\n✅ Video generado exitosamente: {output_path}")
+        print(f"   📊 Duración total: {duracion_total:.2f} segundos ({duracion_total/60:.1f} minutos)")
+        print(f"   🎬 Escenas procesadas: {len(clips_escenas)}/{len(escenas)}")
         
         return str(output_path)
     
@@ -125,25 +175,47 @@ class Pipeline4Video:
         Returns:
             Ruta al archivo de audio o None si no se encuentra
         """
-        # Mapeo simple de descripciones a archivos
-        # TODO: Mejorar con fuzzy matching o búsqueda más inteligente
+        # Mapeo de palabras clave a archivos de sonido disponibles
+        # Basado en los archivos en assets/background_sounds/
         mapeo = {
-            "pajaros": "pajaros.mp3",
-            "parque": "parque.mp3",
-            "casa": "casa.mp3",
-            "escuela": "escuela.mp3",
-            "naturaleza": "naturaleza.mp3",
-            "viento": "viento.mp3",
-            "silencio": "silencio.mp3",
+            "parque": "park.mp3",
+            "park": "park.mp3",
+            "bosque": "forest.mp3",
+            "forest": "forest.mp3",
+            "árbol": "forest.mp3",
+            "naturaleza": "forest.mp3",
+            "hospital": "hospital.mp3",
+            "médico": "hospital.mp3",
+            "doctor": "hospital.mp3",
+            "escuela": "school.mp3",
+            "school": "school.mp3",
+            "colegio": "school.mp3",
+            "clase": "school.mp3",
+            "calle": "street.mp3",
+            "street": "street.mp3",
+            "ciudad": "street.mp3",
+            "canción": "song.mp3",
+            "música": "song.mp3",
+            "song": "song.mp3",
         }
+        
+        if not descripcion:
+            return None
         
         descripcion_lower = descripcion.lower()
         
+        # Buscar coincidencia con las palabras clave
         for keyword, filename in mapeo.items():
             if keyword in descripcion_lower:
                 filepath = self.sounds_dir / filename
                 if filepath.exists():
                     return str(filepath)
+        
+        # Si no encuentra coincidencia, intentar buscar directamente el archivo
+        # por si la descripción ya es un nombre de archivo
+        possible_file = self.sounds_dir / descripcion
+        if possible_file.exists():
+            return str(possible_file)
         
         return None
 

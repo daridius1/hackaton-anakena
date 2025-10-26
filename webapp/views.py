@@ -6,6 +6,7 @@ Integra con los pipelines existentes sin modificarlos
 import json
 import uuid
 from pathlib import Path
+import logging
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
@@ -106,6 +107,9 @@ def generar_video(request):
         return redirect('webapp:index')
     
     moraleja = request.POST.get('moraleja', '').strip()
+
+    # DEBUG: Registrar la moraleja recibida para facilitar diagnóstico
+    logging.getLogger(__name__).info(f"[DEBUG] generar_video received moraleja: '{moraleja}' from user={getattr(request.user, 'username', 'anonymous')}")
     
     if not moraleja:
         return redirect('webapp:index')

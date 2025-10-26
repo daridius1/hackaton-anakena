@@ -1,25 +1,33 @@
 """
 Pipeline 2: Generador de Audio (Voces)
-Genera archivos MP3 con las voces de los diálogos de cada escena.
+Genera archivos MP3 con las voces de los diálogos de cada escena usando ElevenLabs.
 
 Input: guion.json
 Output: assets/voices/dialogue_N.mp3 (uno por cada escena)
-
-TODO: Implementar con API de TTS (Text-to-Speech)
-Opciones: OpenAI TTS, ElevenLabs, Google Cloud TTS, etc.
 """
 import json
 import os
 from pathlib import Path
 from typing import Dict, Any, List
+from dotenv import load_dotenv
+from elevenlabs.client import ElevenLabs
+
+load_dotenv()
 
 
 class Pipeline2Audio:
-    """Pipeline 2: Generador de audio para diálogos"""
+    """Pipeline 2: Generador de audio para diálogos usando ElevenLabs"""
     
-    def __init__(self, output_dir: str = "assets/voices"):
+    def __init__(self, output_dir: str = "assets/voices", config_path: str = "config/voices.json"):
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize ElevenLabs client
+        self.client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
+        
+        # Load voice configuration
+        with open(config_path, 'r') as f:
+            self.config = json.load(f)
     
     def generar(self, guion_path: str = "guion.json") -> List[str]:
         """
@@ -39,7 +47,6 @@ class Pipeline2Audio:
         
         guion = data.get("guion", {})
         escenas = guion.get("escenas", [])
-        personajes = guion.get("metadata", {}).get("personajes", [])
         
         archivos_generados = []
         
@@ -50,42 +57,68 @@ class Pipeline2Audio:
             texto = dialogo.get("texto")
             emocion = dialogo.get("emocion")
             
-            output_file = self.output_dir / f"dialogue_{num_escena}.mp3"
-            
             print(f"   Escena {num_escena}: {personaje} dice '{texto[:50]}...'")
             
-            # TODO: IMPLEMENTAR AQUÍ LA LLAMADA A LA API DE TTS
-            # Ejemplo pseudo-código:
-            # voz = self._get_voz_para_personaje(personaje, personajes)
-            # audio_bytes = api_tts.generar(texto, voz, emocion)
-            # with open(output_file, "wb") as f:
-            #     f.write(audio_bytes)
-            
-            # Por ahora, crear archivo placeholder vacío
-            output_file.touch()
-            archivos_generados.append(str(output_file))
+            # Generate audio for this dialogue
+            try:
+                output_file = self._generate_audio_for_dialogue(
+                    personaje, texto, emocion, num_escena
+                )
+                archivos_generados.append(str(output_file))
+                print(f"   ✅ Audio generado: {output_file.name}")
+            except Exception as e:
+                print(f"   ❌ Error generando audio para escena {num_escena}: {str(e)}")
+                # Create placeholder file to continue pipeline
+                output_file = self.output_dir / f"dialogue_{num_escena}.mp3"
+                output_file.touch()
+                archivos_generados.append(str(output_file))
         
         print(f"✅ {len(archivos_generados)} archivos de audio generados en: {self.output_dir}")
-        print(f"⚠️  NOTA: Pipeline 2 es un PLACEHOLDER. Implementar integración con TTS API.")
         
         return archivos_generados
     
-    def _get_voz_para_personaje(self, personaje: str, personajes: List[Dict]) -> str:
+    def _generate_audio_for_dialogue(self, personaje: str, texto: str, emocion: str, num_escena: int) -> Path:
         """
-        Mapea personaje a configuración de voz específica.
+        Genera audio para un diálogo específico usando ElevenLabs.
         
-        TODO: Implementar lógica para seleccionar voz según:
-        - Lucas: voz infantil masculina
-        - Sofia: voz infantil femenina
-        - Abuelo Sabio: voz adulta grave
+        Args:
+            personaje: Nombre del personaje
+            texto: Texto del diálogo
+            emocion: Emoción del personaje
+            num_escena: Número de escena
+            
+        Returns:
+            Path al archivo de audio generado
         """
-        # Ejemplo de mapeo (adaptar a tu API de TTS)
-        voces = {
-            "Lucas": "es-ES-AlvaroNeural",  # Ejemplo Azure TTS
-            "Sofia": "es-ES-ElviraNeural",
-            "Abuelo Sabio": "es-ES-AlonsoNeural"
-        }
-        return voces.get(personaje, "es-ES-Standard-A")
+        # Get voice configuration for character
+        if personaje not in self.config["characters"]:
+            raise ValueError(f"Personaje '{personaje}' no encontrado en la configuración de voces")
+        voice_config = self.config["characters"][personaje]
+        default_settings = self.config["default_settings"]
+        
+        # Add emotion tag if present
+        if emocion:
+            texto = f"[{emocion}] {texto}"
+        
+        # Generate audio using ElevenLabs
+        audio = self.client.text_to_speech.convert(
+            text=texto,
+            voice_id=voice_config["voice_id"],
+            model_id=default_settings["model"],
+            output_format=default_settings["output_format"],
+            voice_settings={
+                "speed": default_settings["speed"],
+                "language": "es",
+                "accent": "standard"
+            }
+        )
+        
+        # Save audio file
+        output_file = self.output_dir / f"dialogue_{num_escena}.mp3"
+        with open(output_file, "wb") as f:
+            f.write(b"".join(audio))
+        
+        return output_file
 
 
 if __name__ == "__main__":

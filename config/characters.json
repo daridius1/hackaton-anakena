@@ -1,0 +1,316 @@
+{
+  "animation_style": {
+    "description": "Modern, clean 2D cartoon aesthetic with thick outlines, vibrant colors, and child-friendly proportions. Characters have slightly exaggerated features with larger heads and eyes for expressiveness. Clean, bold outlines with smooth shading using subtle gradients. Backgrounds are simplified but clearly defined settings.",
+    "art_characteristics": [
+      "Thick, well-defined outlines (dark brown or black)",
+      "Flat, vibrant, saturated colors with soft shading",
+      "Slightly exaggerated 'chibi-like' proportions for children",
+      "Large, expressive eyes with prominent pupils and white highlights",
+      "Simple, rounded shapes for natural elements",
+      "Clean geometric forms for man-made objects",
+      "Cheerful, innocent, and inviting overall feel"
+    ]
+  },
+  "characters": {
+    "Lucas": {
+      "basic_info": {
+        "name": "Lucas",
+        "age": "7 years old",
+        "personality": "Curious, energetic, determined",
+        "role": "Main character - curious boy"
+      },
+      "physical_description": {
+        "skin_tone": "Light, peachy skin",
+        "hair": "Short, messy, medium brown hair with strands falling over forehead and slightly spiky on top",
+        "eyes": "Large, round, warm brown eyes with black pupils and white sclera",
+        "eyebrows": "Thick, expressive brown eyebrows",
+        "nose": "Small, simple nose",
+        "mouth": "Medium-sized mouth, often open when speaking or expressing determination",
+        "build": "Lean, youthful build typical of a 7-year-old boy",
+        "height": "Small stature, approximately 4 feet tall"
+      },
+      "clothing": {
+        "shirt": {
+          "type": "Short-sleeved t-shirt",
+          "main_color": "White",
+          "sleeve_color": "Light sky blue",
+          "collar": "Crew neck with light sky blue trim",
+          "graphic": "Red rocket ship with blue nose cone pointing upwards, with bright orange and yellow flames emanating from its base, positioned on the front white portion",
+          "fit": "Slightly loose, comfortable fit"
+        },
+        "shorts": {
+          "type": "Denim shorts",
+          "color": "Dark blue",
+          "length": "Just above the knees",
+          "fit": "Slightly baggy",
+          "details": "Visible stitching details typical of denim"
+        },
+        "socks": {
+          "type": "Ankle socks",
+          "color": "White",
+          "details": "Two thin, parallel red stripes around the cuff"
+        },
+        "shoes": {
+          "type": "Canvas sneakers",
+          "color": "Red canvas with white laces",
+          "details": "White rubber toe caps and thick white soles",
+          "style": "Classic canvas sneaker design"
+        },
+        "accessories": {
+          "bracelet": "Dark beaded bracelet (black or dark blue) on left wrist"
+        }
+      },
+      "typical_expressions": [
+        "Determined or slightly angry with furrowed brows",
+        "Curious with wide eyes",
+        "Happy with a wide smile",
+        "Surprised with raised eyebrows"
+      ],
+      "typical_poses": [
+        "Dynamic, action-oriented stance with legs bent and spread apart",
+        "Left arm bent with clenched fist near chest",
+        "Right arm extended forward with open hand",
+        "Looking down and to the left when addressing smaller characters"
+      ]
+    },
+    "Sofia": {
+      "basic_info": {
+        "name": "Sofia",
+        "age": "7 years old", 
+        "personality": "Intelligent, confident, joyful, energetic",
+        "role": "Main character - intelligent girl"
+      },
+      "physical_description": {
+        "skin_tone": "Light, peachy skin",
+        "hair": "Voluminous, shoulder-length, dark brown hair with distinct, bouncy curls that frame her face",
+        "eyes": "Large, round, dark brown eyes with prominent black pupils and single circular white highlights",
+        "eyebrows": "Thin, dark brown, arched eyebrows",
+        "nose": "Small, simple, dot-like nose, slightly upturned",
+        "mouth": "Medium-sized mouth, often in a wide, open smile revealing small, neat white teeth and pink tongue",
+        "cheeks": "Often flushed with soft pink color when excited or happy",
+        "build": "Small, slender, childlike with rounded features",
+        "height": "Small stature, approximately 4 feet tall, similar to Lucas"
+      },
+      "clothing": {
+        "dress": {
+          "type": "Short-sleeved, knee-length, A-line dress",
+          "color": "Vibrant, solid bubblegum pink",
+          "fabric": "Smooth, soft cotton-like appearance",
+          "sleeves": "Short puff sleeves with distinct white trim at the cuff",
+          "neckline": "Simple, rounded neckline",
+          "waist": "Subtle seam or band around the waist",
+          "hem": "Plain hem that falls just above her knees",
+          "fit": "Comfortable, slightly loose fit"
+        },
+        "socks": {
+          "type": "Plain white ankle socks",
+          "visibility": "Visible above her shoes"
+        },
+        "shoes": {
+          "type": "Mary Jane style shoes",
+          "color": "Slightly darker shade of pink than her dress",
+          "details": "Single strap across the top of the foot, small rounded toe",
+          "soles": "Lighter pink color"
+        },
+        "accessories": {
+          "microphone": "Red microphone with black handle and thin black cord (when performing)"
+        }
+      },
+      "typical_expressions": [
+        "Joyful, confident smile with wide open mouth",
+        "Playful wink with one eye closed",
+        "Curious expression with raised eyebrows",
+        "Excited expression with flushed cheeks"
+      ],
+      "typical_poses": [
+        "Standing confidently with hands on hips",
+        "Holding microphone with one hand, other hand gesturing",
+        "Sitting attentively with hands in lap",
+        "Waving enthusiastically with raised hand"
+      ]
+    },
+    "Carlos": {
+      "basic_info": {
+        "name": "Carlos",
+        "age": "70 years old",
+        "personality": "Wise, patient, kind, grandfatherly",
+        "role": "Wise grandfather figure"
+      },
+      "physical_description": {
+        "skin_tone": "Light skin with age spots and gentle wrinkles",
+        "hair": "Thinning white or silver hair, receding hairline, neatly combed",
+        "facial_hair": "Short, well-trimmed white mustache and beard",
+        "eyes": "Kind, twinkling eyes with crow's feet, warm brown or blue",
+        "eyebrows": "Bushy white eyebrows",
+        "nose": "Prominent but not large nose",
+        "mouth": "Often in a gentle smile, showing some missing teeth",
+        "build": "Slightly stooped posture, thin but not frail",
+        "height": "Medium height, appears shorter due to age-related posture"
+      },
+      "clothing": {
+        "shirt": {
+          "type": "Long-sleeved button-up shirt or cardigan",
+          "color": "Soft earth tones - beige, light brown, or cream",
+          "pattern": "Subtle plaid or solid color",
+          "fit": "Comfortable, slightly loose fit"
+        },
+        "pants": {
+          "type": "Comfortable trousers",
+          "color": "Dark brown or navy blue",
+          "fit": "Loose, comfortable fit with belt",
+          "material": "Cotton or wool blend"
+        },
+        "shoes": {
+          "type": "Comfortable walking shoes or loafers",
+          "color": "Brown leather",
+          "style": "Practical, supportive footwear"
+        },
+        "accessories": {
+          "glasses": "Round, wire-framed reading glasses (when reading)",
+          "watch": "Simple wristwatch",
+          "hat": "Optional soft cap or hat in winter scenes"
+        }
+      },
+      "typical_expressions": [
+        "Warm, gentle smile with crinkled eyes",
+        "Thoughtful expression with hand on chin",
+        "Surprised expression with raised eyebrows",
+        "Concerned expression with furrowed brow"
+      ],
+      "typical_poses": [
+        "Sitting in a comfortable chair with hands folded",
+        "Standing with one hand on hip, other gesturing while speaking",
+        "Leaning forward attentively when listening",
+        "Walking slowly with hands behind back"
+      ]
+    },
+    "Juan": {
+      "basic_info": {
+        "name": "Juan",
+        "age": "40 years old",
+        "personality": "Friendly, helpful, patient, adult authority figure",
+        "role": "Supporting adult character"
+      },
+      "physical_description": {
+        "skin_tone": "Light to medium skin tone",
+        "hair": "Short, neat, dark brown or black hair, professional cut",
+        "eyes": "Kind, friendly brown eyes",
+        "eyebrows": "Well-groomed, medium-thick eyebrows",
+        "nose": "Medium-sized, straight nose",
+        "mouth": "Often in a warm smile, well-defined lips",
+        "build": "Average adult build, not too tall or short",
+        "height": "Medium height, approximately 5'8\" to 6'0\""
+      },
+      "clothing": {
+        "shirt": {
+          "type": "Polo shirt or casual button-up",
+          "color": "Light blue, white, or soft pastel colors",
+          "fit": "Neat, professional but casual fit"
+        },
+        "pants": {
+          "type": "Khaki pants or dark jeans",
+          "color": "Beige, navy, or dark blue",
+          "fit": "Comfortable, professional fit"
+        },
+        "shoes": {
+          "type": "Casual dress shoes or clean sneakers",
+          "color": "Brown or black",
+          "style": "Clean, well-maintained"
+        },
+        "accessories": {
+          "watch": "Simple wristwatch",
+          "belt": "Matching leather belt"
+        }
+      },
+      "typical_expressions": [
+        "Warm, encouraging smile",
+        "Attentive listening expression",
+        "Encouraging nod with slight smile",
+        "Concerned but caring expression"
+      ],
+      "typical_poses": [
+        "Standing with arms crossed in a friendly manner",
+        "Sitting with hands on knees, leaning forward",
+        "Walking with hands in pockets",
+        "Gesturing with open hands while explaining"
+      ]
+    },
+    "Martina": {
+      "basic_info": {
+        "name": "Martina",
+        "age": "35 years old",
+        "personality": "Caring, nurturing, intelligent, motherly",
+        "role": "Supporting adult character"
+      },
+      "physical_description": {
+        "skin_tone": "Light skin tone",
+        "hair": "Shoulder-length, wavy brown hair, neatly styled",
+        "eyes": "Kind, intelligent brown eyes with gentle expression",
+        "eyebrows": "Well-shaped, medium-thick eyebrows",
+        "nose": "Small, straight nose",
+        "mouth": "Often in a gentle smile, well-defined lips",
+        "build": "Average adult female build, graceful posture",
+        "height": "Medium height, approximately 5'4\" to 5'6\""
+      },
+      "clothing": {
+        "top": {
+          "type": "Blouse or cardigan",
+          "color": "Soft pastels - light pink, lavender, or cream",
+          "fit": "Comfortable, professional but warm",
+          "details": "May have subtle patterns or be solid color"
+        },
+        "bottom": {
+          "type": "Skirt or pants",
+          "color": "Matching or complementary to top",
+          "fit": "Professional but comfortable",
+          "length": "Appropriate length for professional setting"
+        },
+        "shoes": {
+          "type": "Comfortable flats or low heels",
+          "color": "Neutral colors - black, brown, or navy",
+          "style": "Practical, professional"
+        },
+        "accessories": {
+          "jewelry": "Simple earrings and necklace",
+          "bag": "Professional handbag or tote"
+        }
+      },
+      "typical_expressions": [
+        "Warm, motherly smile",
+        "Attentive listening with slight head tilt",
+        "Encouraging expression with crinkled eyes",
+        "Concerned but caring expression"
+      ],
+      "typical_poses": [
+        "Sitting with hands folded on desk or lap",
+        "Standing with one hand on hip, other gesturing",
+        "Leaning forward with hands on knees when talking to children",
+        "Walking with purposeful, graceful steps"
+      ]
+    }
+  },
+  "scene_guidelines": {
+    "lighting": "Bright, cheerful lighting with soft shadows",
+    "color_palette": "Vibrant, child-friendly colors with high saturation",
+    "background_style": "Simplified but clearly defined settings with clean geometric shapes",
+    "perspective": "Slightly elevated view to show characters clearly",
+    "composition": "Characters should be prominently featured with clear expressions visible"
+  },
+  "consistency_notes": {
+    "important": [
+      "All characters must maintain their exact clothing and appearance across all scenes",
+      "Facial features and proportions must remain consistent",
+      "Color schemes for each character's clothing must be identical in every scene",
+      "Character heights and builds must remain consistent relative to each other",
+      "Hair styles and colors must never change",
+      "Accessories and clothing details must be identical in every appearance"
+    ],
+    "style_consistency": [
+      "Use the same thick outline style for all characters",
+      "Maintain the same color saturation and shading technique",
+      "Keep the same exaggerated proportions for child characters",
+      "Use consistent lighting and shadow placement",
+      "Maintain the same clean, modern cartoon aesthetic throughout"
+    ]
+  }
+}

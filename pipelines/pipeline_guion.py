@@ -71,7 +71,7 @@ class Pipeline1Guion:
             "- Cada escena tiene 1 diálogo y descripción visual.\n"
             "- Título relacionado con la moraleja.\n"
             "- Diálogos simples para niños 5-8 años, en español.\n"
-            "- Para las escenas puedes elegir solamente entre estos escenarios: parque, habitación, bosque, hospital, colegio, calle.
+            "- Para las escenas puedes elegir solamente entre estos escenarios: parque, habitación, bosque, hospital, colegio, calle."
             "- Emociones variadas: curioso, feliz, sorprendido, etc.\n"
             "Moraleja: \"" + moraleja + "\"\n"
             "Devuelve únicamente el JSON, sin texto adicional."
